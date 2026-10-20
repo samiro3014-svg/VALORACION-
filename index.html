@@ -112,6 +112,8 @@ input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-vis
 .saved button{width:100%;text-align:left;background:var(--chip);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);font:14px var(--f-body);cursor:pointer;display:flex;justify-content:space-between;gap:10px}
 .saved button span{color:var(--mut);font-size:13px}
 .foot{margin-top:22px;font-size:12.5px;color:var(--mut);text-align:center}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+details.mine summary{cursor:pointer;color:var(--brand-2);font-weight:600;font-size:14px;margin-bottom:8px}
 .how{margin:0 0 16px}
 .how ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;counter-reset:paso}
 .how li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 12px 13px;display:flex;flex-direction:column;gap:3px;counter-increment:paso;min-width:0}
@@ -138,7 +140,7 @@ input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-vis
 
   <section id="view-a" role="tabpanel">
     <section class="how" aria-label="Cómo funciona la valoración"><ol>
-      <li><b>Formulario</b><span>Responda en 8 a 10 minutos y envíelo por WhatsApp.</span></li>
+      <li><b>Formulario</b><span>Responda en 8 a 10 minutos y envíelo.</span></li>
       <li><b>Evaluación</b><span>Medidas, composición corporal y pruebas físicas, presencial o virtual.</span></li>
       <li><b>Proyección y plan</b><span>Reciba su proyección a 12 semanas y su plan de nutrición y entrenamiento.</span></li>
     </ol></section>
@@ -165,6 +167,8 @@ input:focus-visible,textarea:focus-visible,select:focus-visible,button:focus-vis
 (function(){
 "use strict";
 const WA = "573506343112";
+/* Dirección de la aplicación web de Google Apps Script que guarda cada envío en Google Sheets y Drive. */
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbwAG9hAG16v5qMxtlZIP85Gi4Si3Q99FhQF218-tXA7rc_nEHw17r2exRjCH6JiqiyO8w/exec";
 const $ = (s, r=document) => r.querySelector(s);
 const el = (tag, attrs={}, ...kids) => { const n=document.createElement(tag); for(const [k,v] of Object.entries(attrs)){ if(v==null||v===false) continue; if(k==="class") n.className=v; else if(k==="text") n.textContent=v; else n.setAttribute(k, v===true?"":v);} for(const k of kids){ if(k!=null) n.append(k);} return n; };
 const store = { get(k){ try{ return JSON.parse(localStorage.getItem(k)||"null"); }catch(e){ return null; } }, set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }, del(k){ try{ localStorage.removeItem(k); }catch(e){} } };
@@ -188,7 +192,7 @@ const ADM = [
   {id:"talla",type:"number",label:"Estatura",unit:"cm",half:1,min:120,max:230,step:"1"}
  ]},
  {t:"Objetivo", d:"Defina con precisión qué quiere lograr. Esto orienta la proyección inicial.", f:[
-  {id:"objetivo",type:"radio",label:"Objetivo principal",req:1,opts:["Reducir grasa corporal","Ganar peso y masa muscular","Recomposición corporal","Mejorar salud y hábitos","Rendimiento deportivo"]},
+  {id:"objetivo",type:"checks",label:"Objetivos (puede elegir varios)",req:1,opts:["Reducir grasa corporal","Ganar peso y masa muscular","Recomposición corporal","Mejorar salud y hábitos","Rendimiento deportivo"]},
   {id:"resultado",type:"textarea",label:"¿Qué resultado concreto quiere lograr en 12 semanas?",req:1,ph:"Ejemplo: bajar 8 kg y reducir la talla del pantalón."},
   {id:"motivo",type:"textarea",label:"¿Por qué es importante para usted lograrlo ahora?"},
   {id:"importancia",type:"scale",label:"¿Qué tan importante es este objetivo para usted?",req:1,ends:["Poco","Muy importante"]},
@@ -401,6 +405,7 @@ ADM.forEach((s,i)=>{
   const grid = el("div",{class:"fields"}); s.f.forEach(f=>grid.append(buildField(f,"a_"))); sec.append(grid);
   fa.append(sec);
 });
+fa.append(el("input",{type:"text",name:"empresa",id:"a_hp",tabindex:"-1",autocomplete:"off","aria-hidden":"true",class:"hp"}));
 const nav = el("div",{class:"nav"});
 const bBack = el("button",{type:"button",class:"btn sec",id:"a-back",text:"Anterior"});
 const bNext = el("button",{type:"button",class:"btn pri",id:"a-next",text:"Siguiente"});
@@ -433,7 +438,7 @@ bNext.addEventListener("click",()=>{
 
 function edadDe(iso){ if(!iso) return ""; const b=new Date(iso+"T00:00:00"), t=new Date(); let a=t.getFullYear()-b.getFullYear(); const m=t.getMonth()-b.getMonth(); if(m<0||(m===0&&t.getDate()<b.getDate())) a--; return a>0&&a<120? a : ""; }
 function resumenA(v){
-  const L=[]; const add=(k,x)=>{ if(x==null) return; const s=Array.isArray(x)? x.join(", ") : String(x); if(s.trim()) L.push(k+": "+s.trim()); };
+  const L=[]; const add=(k,x)=>{ if(x==null) return; const s=(Array.isArray(x)? x.join(", ") : String(x)).trim().replace(/\s*\n\s*/g,"; "); if(s) L.push(k+": "+s); };
   const pq = ["pq1","pq2","pq3","pq4","pq5","pq6","pq7"].filter(k=>v[k]==="Sí").length;
   const sc = ["sc1","sc2","sc3","sc4","sc5"].filter(k=>v[k]==="Sí").length;
   L.push("VALORACIÓN INICIAL · FORMULARIO DEL CLIENTE");
@@ -443,7 +448,7 @@ function resumenA(v){
   L.push("", "— DATOS PERSONALES");
   add("Nombre",v.nombre); add("Fecha de nacimiento",fechaTxt(v.fecha_nac)); add("Edad", edadDe(v.fecha_nac)? edadDe(v.fecha_nac)+" años":""); add("Sexo",v.sexo); add("WhatsApp",v.whatsapp); add("Ciudad",v.ciudad); add("Ocupación",v.ocupacion); add("Trabajo",v.trabajo); add("Peso aproximado", v.peso? v.peso+" kg":""); add("Estatura", v.talla? v.talla+" cm":"");
   L.push("", "— OBJETIVO");
-  add("Objetivo",v.objetivo); add("Resultado en 12 semanas",v.resultado); add("Motivo",v.motivo); add("Importancia", v.importancia? v.importancia+"/10":""); add("Intentos previos",v.intentos); add("Barreras",v.barreras);
+  add("Objetivos",v.objetivo); add("Resultado en 12 semanas",v.resultado); add("Motivo",v.motivo); add("Importancia", v.importancia? v.importancia+"/10":""); add("Intentos previos",v.intentos); add("Barreras",v.barreras);
   L.push("", "— SALUD");
   add("Actividad física segura (respuestas Sí)", pq? ["pq1","pq2","pq3","pq4","pq5","pq6","pq7"].map((k,i)=>v[k]==="Sí"?"P"+(i+1):null).filter(Boolean).join(", ") : "ninguna");
   add("Condiciones",v.enfermedades); add("Medicamentos",v.medicamentos); add("Alergias o intolerancias",v.alergias); add("Lesiones o dolores",v.lesiones); add("Embarazo o lactancia",v.embarazo); add("Ciclo menstrual",v.ciclo); add("Exámenes recientes",v.examenes);
@@ -463,18 +468,37 @@ async function finishA(){
   fa.hidden = true; $("#prog").hidden = true;
   doneA.hidden = false; doneA.replaceChildren();
   const okIco = '<svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#4C9A2A"/><path d="M12 20.5l5.5 5.5L28.5 15" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  const ok = el("div",{class:"ok"}); ok.innerHTML = okIco; ok.append(el("div",{}, el("b",{text:"Formulario completo"}), el("span",{text:"Envíe sus respuestas por WhatsApp para agendar su evaluación."})));
-  const wa = el("a",{class:"btn wa", href:"https://wa.me/"+WA+"?text="+encodeURIComponent(txt), target:"_blank", rel:"noopener", id:"a-wa"});
+  let enviado = false;
+  if(ENDPOINT){
+    doneA.append(el("p",{class:"status",text:"Enviando sus respuestas…"}));
+    try{
+      await fetch(ENDPOINT,{method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"},
+        body:JSON.stringify({tipo:"admision", valores:v, resumen:txt, hp:($("#a_hp")||{}).value||""})});
+      enviado = true; store.del(DRAFT_A);
+    }catch(e){ enviado = false; }
+    doneA.replaceChildren();
+  }
+  const ok = el("div",{class:"ok"}); ok.innerHTML = okIco;
+  ok.append(enviado
+    ? el("div",{}, el("b",{text:"Respuestas registradas"}), el("span",{text:"Carlos Forero recibió su valoración. Escríbale por WhatsApp para agendar su evaluación."}))
+    : el("div",{}, el("b",{text:"Formulario completo"}), el("span",{text:"Envíe sus respuestas por WhatsApp para agendar su evaluación."})));
+  const waTxt = enviado ? "Hola, soy "+(v.nombre||"")+". Ya completé el formulario de valoración y quiero agendar mi evaluación." : txt;
+  const wa = el("a",{class:"btn wa", href:"https://wa.me/"+WA+"?text="+encodeURIComponent(waTxt), target:"_blank", rel:"noopener", id:"a-wa"});
   wa.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>';
-  wa.append("Enviar por WhatsApp");
+  wa.append(enviado ? "Agendar por WhatsApp" : "Enviar por WhatsApp");
   const cp = el("button",{type:"button",class:"btn sec",id:"a-copy",text:"Copiar respuestas"});
   const st = el("p",{class:"status",id:"a-status","aria-live":"polite"});
   const pre = el("div",{class:"pre",id:"a-pre",tabindex:"0",text:txt});
   cp.addEventListener("click",()=>copy(txt, pre, st));
   const back = el("button",{type:"button",class:"btn ghost",text:"Editar respuestas"});
   back.addEventListener("click",()=>{ doneA.hidden=true; fa.hidden=false; $("#prog").hidden=false; showStep(ADM.length-1); });
-  doneA.append(ok, el("div",{class:"actions"}, wa, cp, back), st,
-    el("p",{class:"help",text:"Si el botón de WhatsApp no abre la aplicación, copie las respuestas y péguelas en un chat con el número 350 634 3112."}), pre);
+  if(enviado){
+    const det = el("details",{class:"mine"}, el("summary",{text:"Ver mis respuestas"}), pre);
+    doneA.append(ok, el("div",{class:"actions"}, wa, cp), st, det);
+  } else {
+    doneA.append(ok, el("div",{class:"actions"}, wa, cp, back), st,
+      el("p",{class:"help",text:"Si el botón de WhatsApp no abre la aplicación, copie las respuestas y péguelas en un chat con el número 350 634 3112."}), pre);
+  }
   await capsReady;
   if(canSave){
     try{ await db.collection("admisiones").add({creado:new Date().toISOString(), nombre:v.nombre||"", valores:v, resumen:txt}); st.textContent="Guardado en las valoraciones del programa."; }
@@ -580,6 +604,7 @@ eSave.addEventListener("click", async ()=>{
       eSt.textContent = "Evaluación guardada y datos del plan copiados.";
     }catch(e){ eSt.textContent = "Datos del plan copiados. No se pudo guardar en la base de datos."; }
   } else {
+    if(ENDPOINT){ try{ await fetch(ENDPOINT,{method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify({tipo:"evaluacion", valores:v, plan})}); }catch(e){} }
     /* Fuera de Claude: guarda en este dispositivo y ofrece el archivo */
     const lista = store.get(LOCAL_E) || [];
     const id = editingId || ("ev-"+Date.now());
@@ -591,7 +616,7 @@ eSave.addEventListener("click", async ()=>{
       const a = el("a",{class:"btn sec", href:URL.createObjectURL(blob), download:"evaluacion_"+(v.nombre||"cliente").normalize("NFD").replace(/[^\w]+/g,"_")+"_"+v.fecha+".json", text:"Descargar archivo de la evaluación"});
       const old = $("#e-dl"); if(old) old.remove(); a.id="e-dl"; eAct.append(a);
     }catch(e){}
-    eSt.textContent = "Evaluación guardada en este dispositivo y datos del plan copiados.";
+    eSt.textContent = ENDPOINT ? "Evaluación guardada en Google Sheets y en este dispositivo; datos del plan copiados." : "Evaluación guardada en este dispositivo y datos del plan copiados.";
   }
 });
 const LOCAL_E = "valoracion-evaluaciones";
