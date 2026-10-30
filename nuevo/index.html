@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Valoración inicial · Carlos Forero</title>
+<meta name="description" content="Formulario de valoración nutricional inicial. Carlos Forero, preparador físico y nutricionista.">
+<meta name="theme-color" content="#0B3B59">
+<link rel="icon" href="../logo.png">
+<style>
+:root{
+  --bg:#F3F6F8; --surface:#FFFFFF; --ink:#15232E; --mut:#5B6B78; --line:#DCE3E8;
+  --brand:#0B3B59; --brand-2:#114B70; --apple:#83C341; --apple-ink:#3F7F1E; --apple-bg:#EEF6E5;
+  --btn:#114B70; --btn-ink:#FFFFFF; --focus:#83C341; --warn:#8A5200; --warn-bg:#FFF5E3; --err:#B3261E;
+  --chip:#F7F9FA; --chip-on:#114B70; --chip-on-ink:#FFFFFF;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B151C; --surface:#13202A; --ink:#E5ECF1; --mut:#9DADB9; --line:#263843;
+  --brand:#0A2E45; --brand-2:#7DB3DD; --apple:#8FD14F; --apple-ink:#A6DE6F; --apple-bg:#1A2B17;
+  --btn:#2D6C9C; --btn-ink:#FFFFFF; --focus:#8FD14F; --warn:#F2B65A; --warn-bg:#2B2213; --err:#FF8A80;
+  --chip:#182833; --chip-on:#2D6C9C; --chip-on-ink:#FFFFFF; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B151C; --surface:#13202A; --ink:#E5ECF1; --mut:#9DADB9; --line:#263843;
+  --brand:#0A2E45; --brand-2:#7DB3DD; --apple:#8FD14F; --apple-ink:#A6DE6F; --apple-bg:#1A2B17;
+  --btn:#2D6C9C; --btn-ink:#FFFFFF; --focus:#8FD14F; --warn:#F2B65A; --warn-bg:#2B2213; --err:#FF8A80;
+  --chip:#182833; --chip-on:#2D6C9C; --chip-on-ink:#FFFFFF; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--font)}
+.band{background:var(--brand);color:#fff}
+.band .in{max-width:640px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.band img{width:52px;height:34px;object-fit:contain;background:#fff;border-radius:8px;padding:2px 4px}
+.band b{display:block;font-size:16px;letter-spacing:.2px}
+.band small{display:block;font-size:13px;opacity:.85}
+main{max-width:640px;margin:0 auto;padding:16px 16px 120px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 16px}
+h1{font-size:22px;line-height:1.25;margin:0 0 6px}
+h2{font-size:19px;line-height:1.3;margin:0 0 4px}
+.lead{color:var(--mut);margin:0 0 16px;font-size:15px}
+.prog{margin:0 0 12px}
+.prog .meta{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);margin-bottom:6px}
+.bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--apple);width:0;transition:width .25s}
+.f{margin:0 0 20px;border:0;padding:0;min-width:0}
+.f > label.q, .f > legend{display:block;font-weight:600;font-size:15px;margin:0 0 8px;padding:0}
+.req{color:var(--err);margin-left:2px}
+.help{color:var(--mut);font-size:13px;margin:-4px 0 8px}
+input[type=text],input[type=email],input[type=tel],input[type=date],input[type=time],input[type=number],textarea{
+  width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--surface);
+  border:1.5px solid var(--line);border-radius:10px;padding:12px;min-height:48px}
+textarea{min-height:84px;resize:vertical}
+input:focus-visible,textarea:focus-visible{outline:3px solid var(--focus);outline-offset:1px;border-color:var(--brand-2)}
+.unit{display:flex;align-items:center;gap:8px}
+.unit input{flex:1}
+.unit span{color:var(--mut);font-size:15px;min-width:28px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts.col{flex-direction:column}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;width:1px;height:1px}
+.opt span{display:flex;align-items:center;min-height:46px;padding:10px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--chip);cursor:pointer;font-size:15px;user-select:none}
+.opts.col .opt span{width:100%}
+.opt input:checked + span{background:var(--chip-on);color:var(--chip-on-ink);border-color:var(--chip-on)}
+.opt input:focus-visible + span{outline:3px solid var(--focus);outline-offset:1px}
+.scale{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}
+.scale .opt span{justify-content:center;padding:10px 0;min-height:44px}
+.ends{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);margin-top:4px}
+.consent{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1.5px solid var(--line);border-radius:10px;background:var(--chip);cursor:pointer}
+.consent input{width:22px;height:22px;margin:2px 0 0;flex:none;accent-color:var(--brand-2)}
+.consent span{font-size:14px}
+.sub{font-size:13px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--apple-ink);margin:24px 0 10px;padding-top:16px;border-top:1px solid var(--line)}
+.sub:first-child{margin-top:0;padding-top:0;border-top:0}
+.note{background:var(--apple-bg);border-radius:10px;padding:12px;font-size:14px;margin:0 0 16px}
+.err{color:var(--err);font-size:13px;margin-top:6px}
+.f.bad input,.f.bad textarea{border-color:var(--err)}
+.f.bad .opt span{border-color:var(--err)}
+.nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+.nav .in{max-width:640px;margin:0 auto;display:flex;gap:10px}
+.btn{font:inherit;font-weight:600;font-size:16px;border:0;border-radius:10px;min-height:50px;padding:0 18px;cursor:pointer;background:var(--btn);color:var(--btn-ink);flex:1}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);flex:0 0 auto}
+.btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.btn[disabled]{opacity:.6;cursor:default}
+.list{margin:0 0 16px;padding-left:20px}
+.list li{margin:4px 0}
+.ok{text-align:center;padding:12px 0}
+.ok svg{margin:0 auto 12px;display:block}
+.wa{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;margin-top:12px}
+.fine{color:var(--mut);font-size:13px;margin-top:16px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+</style>
+</head>
+<body>
+<header class="band"><div class="in">
+  <img src="../logo.png" alt="" width="52" height="34">
+  <div><b>Carlos Forero</b><small>Preparador físico &amp; Nutricionista</small></div>
+</div></header>
+
+<main>
+  <section id="intro" class="card">
+    <h1>Valoración inicial</h1>
+    <p class="lead">Con esta información se prepara su informe de valoración y su plan. Tiempo estimado: 12 a 15 minutos.</p>
+    <p style="margin:0 0 8px;font-weight:600">Tenga a mano:</p>
+    <ul class="list">
+      <li>Báscula, para registrar su peso en ayunas.</li>
+      <li>Cinta métrica, para medir su cintura.</li>
+      <li>Si es deportista: su calendario de entrenamientos y competencias.</li>
+    </ul>
+    <p class="note">Sus respuestas se guardan en este dispositivo mientras completa el formulario. Puede cerrarlo y continuar más tarde.</p>
+  </section>
+
+  <div id="prog" class="prog" hidden>
+    <div class="meta"><span id="progTxt"></span><span id="progPct"></span></div>
+    <div class="bar"><i id="progBar"></i></div>
+  </div>
+
+  <form id="form" class="card" novalidate hidden>
+    <h2 id="stepT"></h2>
+    <p class="lead" id="stepD"></p>
+    <div id="fields"></div>
+    <div class="hp" aria-hidden="true"><label>No llenar <input type="text" id="hp" tabindex="-1" autocomplete="off"></label></div>
+  </form>
+
+  <section id="done" class="card" hidden></section>
+</main>
+
+<nav class="nav" id="nav"><div class="in">
+  <button type="button" class="btn ghost" id="bBack" hidden>Atrás</button>
+  <button type="button" class="btn" id="bNext">Comenzar</button>
+</div></nav>
+
+<script>
+"use strict";
+/* Envío: mismo Apps Script de la versión anterior (Google Sheets). */
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbwAG9hAG16v5qMxtlZIP85Gi4Si3Q99FhQF218-tXA7rc_nEHw17r2exRjCH6JiqiyO8w/exec";
+const WHATSAPP = "573506343112";
+const DRAFT = "cf-valoracion-v2";
+
+const F = v => v.sexo === "Femenino";
+const DEP = v => v.objetivo === "Rendimiento deportivo" || v.practica === "Sí";
+const SP = s => v => DEP(v) && v.deporte === s;
+
+const STEPS = [
+ {t:"Datos personales", d:"Información básica para identificar su valoración.", f:[
+  {id:"nombre",type:"text",label:"Nombre completo",req:1,ac:"name"},
+  {id:"fecha_nac",type:"date",label:"Fecha de nacimiento",req:1},
+  {id:"sexo",type:"radio",label:"Sexo",opts:["Femenino","Masculino"],req:1},
+  {id:"whatsapp",type:"tel",label:"Número de WhatsApp",req:1,ac:"tel",ph:"300 000 0000"},
+  {id:"correo",type:"email",label:"Correo electrónico",req:1,ac:"email"},
+  {id:"ciudad",type:"text",label:"Ciudad de residencia",req:1},
+  {id:"ocupacion",type:"text",label:"Ocupación"},
+  {id:"trabajo",type:"radio",label:"Su trabajo es principalmente",opts:["Sentado la mayor parte del día","De pie o caminando","Físicamente exigente"],col:1}
+ ]},
+ {t:"Objetivo", d:"El objetivo define las prioridades del plan y el ritmo de cambio.", f:[
+  {id:"objetivo",type:"radio",label:"Objetivo principal",req:1,col:1,opts:["Reducir grasa corporal","Ganar peso y masa muscular","Recomposición corporal","Rendimiento deportivo","Mejorar salud y hábitos"]},
+  {id:"practica",type:"yn",label:"¿Practica un deporte de forma regular o compite?",req:1,show:v=>v.objetivo && v.objetivo!=="Rendimiento deportivo"},
+  {id:"resultado",type:"textarea",label:"¿Qué resultado concreto quiere lograr en 12 semanas?",req:1,ph:"Ejemplo: reducir 6 cm de cintura y mejorar mi tiempo en 10K."},
+  {id:"fecha_obj",type:"date",label:"Fecha límite o fecha de competencia (si la tiene)"},
+  {id:"importancia",type:"scale",label:"¿Qué tan importante es este objetivo para usted?",req:1,ends:["Poco","Muy importante"]},
+  {id:"intentos",type:"textarea",label:"¿Qué ha intentado antes y qué resultado obtuvo?"},
+  {id:"barreras",type:"checks",label:"¿Qué le ha impedido lograrlo hasta ahora?",opts:["Falta de tiempo","Hambre o ansiedad","Comidas fuera de casa","Fines de semana","Constancia","Presupuesto","No sé qué comer","Viajes","Otra"]}
+ ]},
+ {t:"Medidas", d:"Registre las medidas en la mañana, en ayunas y después de ir al baño.", f:[
+  {id:"peso",type:"number",label:"Peso",unit:"kg",req:1,min:30,max:250,step:"0.1"},
+  {id:"talla",type:"number",label:"Estatura",unit:"cm",req:1,min:120,max:230,step:"1"},
+  {id:"cintura",type:"number",label:"Perímetro de cintura",unit:"cm",min:45,max:200,step:"0.5",help:"Mida a la altura del ombligo, de pie, al final de una exhalación normal y sin apretar la cinta."},
+  {id:"comp",type:"radio",label:"¿Tiene una medición reciente de composición corporal?",opts:["No","Bioimpedancia","Pliegues cutáneos (ISAK)","DEXA"],col:1},
+  {id:"grasa",type:"number",label:"Porcentaje de grasa de esa medición",unit:"%",min:3,max:65,step:"0.1",show:v=>v.comp && v.comp!=="No"},
+  {type:"note",label:"Las fotos de progreso (frente, perfil y espalda) se solicitan por WhatsApp al terminar. Son opcionales y confidenciales."}
+ ]},
+ {t:"Salud", d:"Estas preguntas permiten iniciar el programa de forma segura. Sus respuestas son confidenciales.", f:[
+  {type:"h",label:"Actividad física segura"},
+  {id:"pq1",type:"yn",label:"¿Algún médico le ha dicho que tiene una condición del corazón o presión arterial alta?",req:1},
+  {id:"pq2",type:"yn",label:"¿Siente dolor en el pecho en reposo, en sus actividades diarias o al hacer ejercicio?",req:1},
+  {id:"pq3",type:"yn",label:"¿Ha perdido el equilibrio por mareo o ha perdido el conocimiento en los últimos 12 meses?",req:1},
+  {id:"pq4",type:"yn",label:"¿Tiene diagnosticada otra enfermedad crónica distinta a las anteriores?",req:1},
+  {id:"pq5",type:"yn",label:"¿Toma actualmente medicamentos para una enfermedad crónica?",req:1},
+  {id:"pq6",type:"yn",label:"¿Tiene un problema de huesos, articulaciones o músculos que empeore con la actividad física?",req:1},
+  {id:"pq7",type:"yn",label:"¿Algún médico le ha indicado que solo realice actividad física con supervisión médica?",req:1}
+ ]},
+ {t:"Antecedentes", d:"Condiciones y tratamientos que se deben considerar en el plan.", f:[
+  {id:"enfermedades",type:"checks",label:"Condiciones diagnosticadas",opts:["Diabetes o prediabetes","Hipertensión","Colesterol o triglicéridos altos","Hígado graso","Hipotiroidismo","Síndrome de ovario poliquístico","Gastritis o reflujo","Colon irritable","Anemia","Enfermedad renal","Ninguna"]},
+  {id:"medicamentos",type:"textarea",label:"Medicamentos que toma actualmente",ph:"Nombre y dosis, si la conoce."},
+  {id:"suplementos",type:"textarea",label:"Suplementos que toma actualmente",ph:"Proteína, creatina, vitaminas, otros."},
+  {id:"alergias",type:"text",label:"Alergias o intolerancias alimentarias"},
+  {id:"digestivo",type:"checks",label:"Síntomas digestivos frecuentes",opts:["Inflamación o gases","Estreñimiento","Diarrea","Acidez","Ninguno"]},
+  {id:"lesiones",type:"textarea",label:"Lesiones, cirugías o dolores actuales"},
+  {id:"embarazo",type:"radio",label:"¿Está en embarazo o lactancia?",opts:["No","Embarazo","Lactancia"],req:1,show:F},
+  {id:"ciclo",type:"radio",label:"Ciclo menstrual en los últimos 6 meses",opts:["Regular","Irregular","Ausente más de 3 meses","Uso anticonceptivos hormonales","No aplica"],col:1,show:F},
+  {id:"examenes",type:"radio",label:"¿Tiene exámenes de sangre de los últimos 6 meses?",opts:["Sí","No"],help:"Si los tiene, podrá enviarlos por WhatsApp al terminar."}
+ ]},
+ {t:"Relación con la comida", d:"Preguntas de tamizaje. Responda según las últimas semanas.", f:[
+  {id:"sc1",type:"yn",label:"¿Se provoca el vómito porque se siente incómodamente lleno o llena?",req:1},
+  {id:"sc2",type:"yn",label:"¿Le preocupa haber perdido el control sobre cuánto come?",req:1},
+  {id:"sc3",type:"yn",label:"¿Ha perdido más de 6 kg en los últimos 3 meses?",req:1},
+  {id:"sc4",type:"yn",label:"¿Se ve con exceso de peso aunque otras personas le digan que está delgado o delgada?",req:1},
+  {id:"sc5",type:"yn",label:"¿Diría que la comida domina su vida?",req:1}
+ ]},
+ {t:"Hábitos", d:"El sueño, el estrés y el consumo de bebidas influyen directamente en los resultados.", f:[
+  {id:"sueno",type:"radio",label:"Horas de sueño por noche",opts:["Menos de 6","6 a 7","7 a 8","Más de 8"],req:1},
+  {id:"sueno_calidad",type:"scale",label:"Calidad del sueño",ends:["Muy mala","Excelente"]},
+  {id:"estres",type:"scale",label:"Nivel de estrés",ends:["Bajo","Muy alto"]},
+  {id:"agua",type:"radio",label:"Agua al día",opts:["Menos de 1 L","1 a 2 L","Más de 2 L"]},
+  {id:"bebidas",type:"radio",label:"Bebidas azucaradas (gaseosa, jugos, té endulzado)",opts:["Nunca","1 al día","2 o más al día"]},
+  {id:"alcohol",type:"radio",label:"Consumo de alcohol",opts:["Nunca","1 a 2 veces al mes","1 vez por semana","2 o más veces por semana"],col:1},
+  {id:"tabaco",type:"radio",label:"Consumo de tabaco o vapeador",opts:["No","Ocasional","Diario"]}
+ ]},
+ {t:"Alimentación", d:"Describa cómo come hoy, sin ajustar sus respuestas. El plan parte de sus hábitos reales.", f:[
+  {id:"comidas",type:"radio",label:"Comidas que hace al día",opts:["1 o 2","3","4","5 o más"],req:1},
+  {id:"despierta",type:"time",label:"Hora a la que se despierta"},
+  {id:"acuesta",type:"time",label:"Hora a la que se acuesta"},
+  {id:"cocina",type:"radio",label:"¿Quién prepara sus comidas?",opts:["Yo","Otra persona en casa","Compro la mayoría"]},
+  {id:"fuera",type:"radio",label:"Comidas fuera de casa por semana",opts:["0 a 1","2 a 4","5 o más"]},
+  {id:"restricciones",type:"checks",label:"Restricciones",opts:["Vegetariano","Vegano","Sin lactosa","Sin gluten","No como pescado","No como cerdo","No como huevo","Ninguna"]},
+  {id:"no_gusta",type:"text",label:"Alimentos que no consume o no le gustan"},
+  {id:"preferidos",type:"text",label:"Alimentos que más disfruta"},
+  {id:"presupuesto",type:"radio",label:"Presupuesto para el mercado",opts:["Ajustado","Moderado","Amplio"]},
+  {id:"hambre",type:"radio",label:"Momento del día con más hambre o ansiedad por comer",opts:["Mañana","Tarde","Noche","No aplica"]}
+ ]},
+ {t:"Un día típico de alimentación", d:"Escriba alimentos y cantidades aproximadas de un día normal (por ejemplo, ayer).", f:[
+  {id:"r_desayuno",type:"textarea",label:"Desayuno",req:1},
+  {id:"r_media",type:"textarea",label:"Media mañana"},
+  {id:"r_almuerzo",type:"textarea",label:"Almuerzo",req:1},
+  {id:"r_tarde",type:"textarea",label:"Tarde"},
+  {id:"r_cena",type:"textarea",label:"Cena",req:1},
+  {id:"r_otros",type:"textarea",label:"Otros (bebidas, mecato, alcohol)"}
+ ]},
+ {t:"Actividad y entrenamiento", d:"Con esta información se calculan el gasto energético y la distribución de comidas alrededor del entrenamiento.", f:[
+  {id:"experiencia",type:"radio",label:"Experiencia en entrenamiento de fuerza",opts:["Nunca he entrenado","Menos de 6 meses","6 meses a 2 años","Más de 2 años"],req:1,col:1},
+  {id:"lugar",type:"radio",label:"¿Dónde entrena?",opts:["Gimnasio","Casa","Ambos","Club o academia"]},
+  {id:"dias",type:"checks",label:"Días de entrenamiento",opts:["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"],req:1},
+  {id:"minutos",type:"radio",label:"Duración habitual de la sesión",opts:["30 min","45 min","60 min","90 min","Más de 90 min"]},
+  {id:"horario",type:"radio",label:"Horario de entrenamiento",opts:["Madrugada","Mañana","Mediodía","Tarde","Noche"]},
+  {id:"pasos",type:"radio",label:"Pasos diarios aproximados",opts:["Menos de 4.000","4.000 a 7.000","7.000 a 10.000","Más de 10.000","No sé"],col:1},
+  {id:"suplementos_ok",type:"radio",label:"¿Estaría dispuesto o dispuesta a usar suplementos si se le indican?",opts:["Sí","No","Prefiero consultarlo"]}
+ ]},
+ {t:"Perfil deportivo", d:"Esta sección define su protocolo de entrenamiento, competencia e hidratación.", show:DEP, f:[
+  {id:"deporte",type:"radio",label:"Deporte principal",req:1,opts:["Running","Tenis de campo","Fútbol","HYROX","CrossFit","Otro"]},
+  {id:"deporte_otro",type:"text",label:"¿Cuál?",req:1,show:v=>v.deporte==="Otro"},
+  {id:"nivel",type:"radio",label:"Nivel",req:1,col:1,opts:["Recreativo","Amateur competitivo","Juvenil o federado","Profesional"]},
+  {id:"horas_sem",type:"radio",label:"Horas de entrenamiento por semana (incluye fuerza)",req:1,opts:["Menos de 5","5 a 8","8 a 12","12 a 16","Más de 16"]},
+  {id:"dobles",type:"yn",label:"¿Entrena dos veces en el mismo día algunos días?"},
+  {id:"competencia",type:"text",label:"Próxima competencia (nombre y fecha)",ph:"Ejemplo: Media Maratón de Bogotá, julio"},
+  {id:"meta_rend",type:"textarea",label:"Objetivo de rendimiento",ph:"Ejemplo: bajar de 50 min en 10K o sostener la intensidad en el tercer set."},
+  {id:"gi",type:"yn",label:"¿Tiene molestias digestivas al entrenar o competir?"},
+  {id:"calambres",type:"yn",label:"¿Ha tenido calambres en entrenamientos o competencias?"},
+  {id:"fatiga",type:"yn",label:"¿Siente fatiga persistente o su rendimiento se ha estancado sin causa clara?"},
+  {id:"fracturas",type:"yn",label:"¿Ha tenido fracturas por estrés?"},
+  {id:"come_comp",type:"textarea",label:"¿Qué come y bebe antes y durante una competencia?"}
+ ]},
+ {t:"Running", d:"Datos específicos de su entrenamiento de carrera.", show:SP("Running"), f:[
+  {id:"km_sem",type:"radio",label:"Kilómetros por semana",req:1,opts:["Menos de 20","20 a 40","40 a 60","60 a 80","Más de 80"]},
+  {id:"distancia",type:"radio",label:"Distancia objetivo",req:1,opts:["5K","10K","21K","42K","Trail o ultra"]},
+  {id:"marca",type:"text",label:"Tiempo actual en esa distancia"},
+  {id:"geles",type:"radio",label:"¿Consume geles o bebidas deportivas en tiradas largas?",opts:["Sí, siempre","A veces","Nunca"]}
+ ]},
+ {t:"Tenis de campo", d:"Datos específicos de su calendario y de sus partidos.", show:SP("Tenis de campo"), f:[
+  {id:"categoria",type:"text",label:"Categoría o ranking",ph:"Ejemplo: Sub-16 nacional, 4.0, veteranos +45"},
+  {id:"torneos",type:"radio",label:"Torneos por mes",req:1,opts:["Ninguno","1","2","3 o más"]},
+  {id:"partidos_dia",type:"radio",label:"Partidos por día en torneo (incluye dobles)",opts:["1","2","3 o más"]},
+  {id:"duracion",type:"radio",label:"Duración habitual de un partido",opts:["Menos de 1 h","1 a 2 h","Más de 2 h"]},
+  {id:"clima",type:"checks",label:"Clima de las sedes donde compite",opts:["Frío","Templado","Cálido seco","Cálido húmedo"]}
+ ]},
+ {t:"Fútbol", d:"Datos específicos de su posición y de su semana de competencia.", show:SP("Fútbol"), f:[
+  {id:"posicion",type:"radio",label:"Posición",req:1,opts:["Portero","Defensa","Mediocampista","Delantero"]},
+  {id:"minutos_partido",type:"radio",label:"Minutos jugados por partido",opts:["Menos de 45","45 a 70","Más de 70"]},
+  {id:"dia_partido",type:"checks",label:"Días habituales de partido",opts:["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"]},
+  {id:"partidos_sem",type:"radio",label:"Partidos por semana",opts:["1","2","3 o más"]}
+ ]},
+ {t:"HYROX", d:"Datos específicos de su categoría y de su competencia.", show:SP("HYROX"), f:[
+  {id:"hyrox_cat",type:"radio",label:"Categoría",req:1,opts:["Open","Pro","Dobles","Relevos"]},
+  {id:"hyrox_tiempo",type:"text",label:"Mejor tiempo o tiempo objetivo"},
+  {id:"hyrox_n",type:"radio",label:"Competencias por año",opts:["1","2 a 3","4 o más"]}
+ ]},
+ {t:"CrossFit", d:"Datos específicos de su nivel y de sus competencias.", show:SP("CrossFit"), f:[
+  {id:"cf_nivel",type:"radio",label:"Nivel",req:1,opts:["Scaled","RX","Competidor"]},
+  {id:"cf_eventos",type:"radio",label:"Eventos por día en competencia",opts:["1","2 a 3","4 o más"]},
+  {id:"cf_n",type:"radio",label:"Competencias por año",opts:["Ninguna","1 a 2","3 o más"]}
+ ]},
+ {t:"Autorizaciones", d:"Lea y marque las autorizaciones para enviar el formulario.", f:[
+  {id:"consentimiento",type:"consent",req:1,label:"Entiendo que el programa es una asesoría de nutrición y entrenamiento que no reemplaza la atención médica, y declaro que la información que entrego es verídica."},
+  {id:"datos",type:"consent",req:1,label:"Autorizo el tratamiento de mis datos personales y de salud con fines exclusivos de la asesoría, conforme a la Ley 1581 de 2012."},
+  {id:"fotos",type:"consent",label:"Autorizo el uso de mis fotos de progreso y resultados con fines educativos y de difusión. Puedo solicitar que no se muestre mi rostro. (Opcional)"},
+  {id:"origen",type:"radio",label:"¿Cómo conoció el servicio?",opts:["Instagram","Recomendación","Club o academia","Gimnasio","Otro"]}
+ ]}
+];
+
+/* ---------- utilidades ---------- */
+const $ = s => document.querySelector(s);
+const store = {
+  get(){ try{ return JSON.parse(localStorage.getItem(DRAFT)) || null; }catch(e){ return null; } },
+  set(x){ try{ localStorage.setItem(DRAFT, JSON.stringify(x)); }catch(e){} },
+  del(){ try{ localStorage.removeItem(DRAFT); }catch(e){} }
+};
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let V = {}, cur = -1, saveT = 0;
+const draft = store.get();
+if(draft && draft.v){ V = draft.v; }
+
+const visibleField = f => !f.show || f.show(V);
+const visibleStep = s => (!s.show || s.show(V)) && s.f.some(f => f.id && visibleField(f));
+const path = () => STEPS.map((s,i) => i).filter(i => visibleStep(STEPS[i]));
+function saveSoon(){ clearTimeout(saveT); saveT = setTimeout(() => store.set({v:V, step:cur}), 400); }
+
+/* ---------- render de un paso ---------- */
+function fieldHTML(f){
+  const vis = visibleField(f) ? "" : " hidden";
+  if(f.type === "h") return `<p class="sub">${esc(f.label)}</p>`;
+  if(f.type === "note") return `<p class="note">${esc(f.label)}</p>`;
+  const id = "f_" + f.id, val = V[f.id], req = f.req ? '<span class="req" aria-hidden="true">*</span>' : "";
+  const help = f.help ? `<p class="help" id="${id}_h">${esc(f.help)}</p>` : "";
+  const err = `<p class="err" id="${id}_e" hidden></p>`;
+  if(["radio","yn","checks","scale"].includes(f.type)){
+    const multi = f.type === "checks";
+    const opts = f.type === "yn" ? ["Sí","No"] : f.type === "scale" ? ["1","2","3","4","5","6","7","8","9","10"] : f.opts;
+    const on = o => multi ? (Array.isArray(val) && val.includes(o)) : val === o;
+    const items = opts.map((o,k) => `<label class="opt"><input type="${multi?"checkbox":"radio"}" name="${id}" value="${esc(o)}"${on(o)?" checked":""}${k===0&&f.req&&!multi?" required":""}><span>${esc(o)}</span></label>`).join("");
+    const cls = f.type === "scale" ? "scale" : "opts" + (f.col ? " col" : "");
+    const ends = f.ends ? `<div class="ends"><span>${esc(f.ends[0])}</span><span>${esc(f.ends[1])}</span></div>` : "";
+    return `<fieldset class="f" data-id="${f.id}"${vis}><legend>${esc(f.label)}${req}</legend>${help}<div class="${cls}">${items}</div>${ends}${err}</fieldset>`;
+  }
+  if(f.type === "consent"){
+    return `<div class="f" data-id="${f.id}"${vis}><label class="consent"><input type="checkbox" id="${id}"${val?" checked":""}><span>${esc(f.label)}${req}</span></label>${err}</div>`;
+  }
+  const v = val == null ? "" : esc(val);
+  const common = `id="${id}" name="${id}"${f.ph?` placeholder="${esc(f.ph)}"`:""}${f.ac?` autocomplete="${f.ac}"`:""}${f.help?` aria-describedby="${id}_h"`:""}`;
+  let input;
+  if(f.type === "textarea") input = `<textarea ${common}>${v}</textarea>`;
+  else if(f.type === "number") input = `<div class="unit"><input type="number" inputmode="decimal" ${common} min="${f.min}" max="${f.max}" step="${f.step}" value="${v}"><span>${esc(f.unit)}</span></div>`;
+  else input = `<input type="${f.type}" ${common} value="${v}"${f.type==="tel"?' inputmode="tel"':""}>`;
+  return `<div class="f" data-id="${f.id}"${vis}><label class="q" for="${id}">${esc(f.label)}${req}</label>${help}${input}${err}</div>`;
+}
+
+function readStep(){
+  const s = STEPS[cur];
+  s.f.forEach(f => {
+    if(!f.id) return;
+    const id = "f_" + f.id;
+    if(f.type === "checks") V[f.id] = [...document.querySelectorAll(`input[name="${id}"]:checked`)].map(i => i.value);
+    else if(["radio","yn","scale"].includes(f.type)){ const c = document.querySelector(`input[name="${id}"]:checked`); V[f.id] = c ? c.value : ""; }
+    else if(f.type === "consent") V[f.id] = $("#"+id).checked;
+    else V[f.id] = $("#"+id).value.trim();
+  });
+}
+function applyShow(){
+  STEPS[cur].f.forEach(f => {
+    if(!f.id || !f.show) return;
+    const box = document.querySelector(`[data-id="${f.id}"]`);
+    if(box) box.hidden = !visibleField(f);
+  });
+}
+function showStep(i){
+  cur = i;
+  const s = STEPS[i], p = path(), pos = p.indexOf(i) + 1;
+  $("#intro").hidden = true; $("#done").hidden = true; $("#form").hidden = false; $("#prog").hidden = false;
+  $("#stepT").textContent = s.t; $("#stepD").textContent = s.d;
+  $("#fields").innerHTML = s.f.map(fieldHTML).join("");
+  $("#progTxt").textContent = `Paso ${pos} de ${p.length}`;
+  const pct = Math.round((pos - 1) / p.length * 100);
+  $("#progPct").textContent = pct + " %"; $("#progBar").style.width = pct + "%";
+  $("#bBack").hidden = false;
+  $("#bNext").textContent = pos === p.length ? "Enviar valoración" : "Continuar";
+  window.scrollTo(0,0);
+  saveSoon();
+}
+
+/* ---------- validación ---------- */
+function validate(){
+  let first = null;
+  STEPS[cur].f.forEach(f => {
+    if(!f.id) return;
+    const box = document.querySelector(`[data-id="${f.id}"]`), e = $("#f_"+f.id+"_e");
+    if(!box || box.hidden){ return; }
+    let msg = "";
+    const v = V[f.id];
+    if(f.req && (v === "" || v == null || v === false || (Array.isArray(v) && !v.length)))
+      msg = f.type === "consent" ? "Esta autorización es necesaria para enviar el formulario." : "Este dato es obligatorio.";
+    else if(f.type === "number" && v !== ""){
+      const n = Number(v);
+      if(isNaN(n) || n < f.min || n > f.max) msg = `Ingrese un valor entre ${f.min} y ${f.max} ${f.unit}.`;
+    } else if(f.type === "email" && v && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) msg = "Revise el formato del correo.";
+    else if(f.type === "tel" && v && v.replace(/\D/g,"").length < 7) msg = "Revise el número de WhatsApp.";
+    box.classList.toggle("bad", !!msg);
+    if(e){ e.hidden = !msg; e.textContent = msg; }
+    if(msg && !first) first = box;
+  });
+  if(first){ first.scrollIntoView({block:"center", behavior:"smooth"}); const i = first.querySelector("input,textarea"); if(i) i.focus({preventScroll:true}); }
+  return !first;
+}
+
+/* ---------- resumen y envío ---------- */
+function edad(d){ if(!d) return ""; const b = new Date(d), n = new Date(); let a = n.getFullYear() - b.getFullYear(); if(n < new Date(n.getFullYear(), b.getMonth(), b.getDate())) a--; return a; }
+function alertas(){
+  const a = [];
+  if(["pq1","pq2","pq3","pq4","pq5","pq6","pq7"].some(k => V[k] === "Sí")) a.push("Actividad física: al menos una respuesta afirmativa; requiere revisión antes de iniciar.");
+  if(["sc1","sc2","sc3","sc4","sc5"].filter(k => V[k] === "Sí").length >= 2) a.push("Tamizaje de conducta alimentaria: 2 o más respuestas afirmativas; evaluar remisión.");
+  if(V.ciclo === "Ausente más de 3 meses") a.push("Ciclo menstrual ausente más de 3 meses; evaluar baja disponibilidad energética.");
+  if(DEP(V) && (V.fatiga === "Sí" || V.fracturas === "Sí")) a.push("Deportista con fatiga persistente o fracturas por estrés; evaluar disponibilidad energética.");
+  if(V.embarazo && V.embarazo !== "No") a.push("Embarazo o lactancia: ajustar requerimientos.");
+  return a;
+}
+function resumen(){
+  const L = ["VALORACIÓN INICIAL · Carlos Forero", "Fecha de envío: " + new Date().toLocaleString("es-CO")];
+  const imc = V.peso && V.talla ? (V.peso / Math.pow(V.talla/100, 2)).toFixed(1) : "";
+  const ict = V.cintura && V.talla ? (V.cintura / V.talla).toFixed(2) : "";
+  L.push(`Edad: ${edad(V.fecha_nac)} años · IMC: ${imc || "-"} · Cintura/talla: ${ict || "-"}`);
+  const al = alertas();
+  if(al.length){ L.push("", "ALERTAS"); al.forEach(x => L.push("- " + x)); }
+  path().forEach(i => {
+    const s = STEPS[i]; L.push("", s.t.toUpperCase());
+    s.f.forEach(f => {
+      if(!f.id || !visibleField(f)) return;
+      let v = V[f.id];
+      if(f.type === "consent") v = v ? "Sí" : "No";
+      if(Array.isArray(v)) v = v.join(", ");
+      if(v === "" || v == null) return;
+      L.push(`${f.label}: ${v}${f.unit ? " " + f.unit : ""}`);
+    });
+  });
+  return L.join("\n");
+}
+async function enviar(){
+  const b = $("#bNext"); b.disabled = true; b.textContent = "Enviando…";
+  const valores = {};
+  path().forEach(i => STEPS[i].f.forEach(f => { if(f.id && visibleField(f)) valores[f.id] = Array.isArray(V[f.id]) ? V[f.id].join(", ") : V[f.id]; }));
+  valores.edad = edad(V.fecha_nac);
+  const txt = resumen();
+  let ok = true;
+  try{
+    const ctrl = new AbortController(); const t = setTimeout(() => ctrl.abort(), 15000);
+    await fetch(ENDPOINT, {method:"POST", mode:"no-cors", keepalive:true, signal:ctrl.signal,
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body: JSON.stringify({tipo:"admision", version:2, valores, resumen:txt, alertas:alertas(), hp:$("#hp").value})});
+    clearTimeout(t);
+  }catch(e){ ok = false; }
+  terminar(ok, txt);
+}
+function terminar(ok, txt){
+  $("#form").hidden = true; $("#prog").hidden = true; $("#nav").hidden = true;
+  const nombre = (V.nombre || "").split(" ")[0];
+  const msg = ok
+    ? `Hola Carlos, soy ${V.nombre}. Acabo de enviar mi valoración inicial.`
+    : `Hola Carlos, soy ${V.nombre}. Este es el resumen de mi valoración inicial:\n\n${txt}`;
+  const wa = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+  const d = $("#done"); d.hidden = false;
+  d.innerHTML = ok
+    ? `<div class="ok"><svg width="48" height="48" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#4C9A2A"/><path d="M12 20.5l5.5 5.5L28.5 15" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+       <h1>Valoración recibida</h1>
+       <p class="lead">${esc(nombre)}, sus respuestas quedaron registradas. El siguiente paso es confirmar por WhatsApp y enviar, si los tiene, sus exámenes de sangre y fotos de progreso.</p></div>
+       <a class="btn wa" href="${wa}" target="_blank" rel="noopener">Confirmar por WhatsApp</a>
+       <p class="fine">Recibirá su informe de valoración y su plan en un plazo máximo de 72 horas hábiles después de la videollamada o de la confirmación de sus datos.</p>`
+    : `<h1>No se pudo confirmar el envío</h1>
+       <p class="lead">La conexión falló. Envíe el resumen por WhatsApp con el siguiente botón; sus respuestas siguen guardadas en este dispositivo.</p>
+       <a class="btn wa" href="${wa}" target="_blank" rel="noopener">Enviar resumen por WhatsApp</a>
+       <button type="button" class="btn ghost" style="width:100%;margin-top:10px" id="retry">Intentar de nuevo</button>`;
+  if(ok){ cur = -1; clearTimeout(saveT); store.del(); }
+  const r = $("#retry"); if(r) r.onclick = () => { $("#nav").hidden = false; showStep(path().at(-1)); };
+  window.scrollTo(0,0);
+}
+
+/* ---------- eventos ---------- */
+$("#form").addEventListener("change", e => {
+  const box = e.target.closest("[data-id]"); if(!box) return;
+  readStep(); applyShow();
+  box.classList.remove("bad"); const er = box.querySelector(".err"); if(er) er.hidden = true;
+  saveSoon();
+});
+$("#form").addEventListener("submit", e => e.preventDefault());
+$("#bNext").addEventListener("click", () => {
+  if(cur < 0){ showStep(draft && draft.step >= 0 && visibleStep(STEPS[draft.step]) ? draft.step : 0); return; }
+  readStep();
+  if(!validate()) return;
+  const p = path(), pos = p.indexOf(cur);
+  if(pos === p.length - 1) enviar(); else showStep(p[pos + 1]);
+});
+$("#bBack").addEventListener("click", () => {
+  readStep();
+  const p = path(), pos = p.indexOf(cur);
+  if(pos <= 0){ cur = -1; $("#form").hidden = true; $("#prog").hidden = true; $("#intro").hidden = false; $("#bBack").hidden = true; $("#bNext").textContent = draft ? "Continuar" : "Comenzar"; saveSoon(); }
+  else showStep(p[pos - 1]);
+});
+if(draft && draft.v && Object.keys(draft.v).length) $("#bNext").textContent = "Continuar donde quedó";
+/* Guardado inmediato si el cliente cierra o cambia de aplicación */
+const flush = () => { if(cur >= 0){ readStep(); clearTimeout(saveT); store.set({v:V, step:cur}); } };
+addEventListener("pagehide", flush);
+document.addEventListener("visibilitychange", () => { if(document.visibilityState === "hidden") flush(); });
+</script>
+</body>
+</html>

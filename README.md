@@ -4,6 +4,7 @@ Formulario web de valoración inicial para clientes de Carlos Forero, preparador
 
 - Página pública: https://samiro3014-svg.github.io/VALORACION-/
 - Evaluación profesional: agregar `#evaluacion` al final del enlace.
+- Formulario nuevo (versión 2, en prueba): https://samiro3014-svg.github.io/VALORACION-/nuevo/
 
 ## Funcionamiento
 - El cliente completa 6 pasos (datos, objetivo, salud, alimentación, actividad y autorizaciones) y envía el resumen por WhatsApp al 350 634 3112.
