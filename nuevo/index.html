@@ -69,6 +69,7 @@ input:focus-visible,textarea:focus-visible{outline:3px solid var(--focus);outlin
 .consent{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1.5px solid var(--line);border-radius:10px;background:var(--chip);cursor:pointer}
 .consent input{width:22px;height:22px;margin:2px 0 0;flex:none;accent-color:var(--brand-2)}
 .consent span{font-size:14px}
+.help a{color:var(--brand-2)}
 .sub{font-size:13px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--apple-ink);margin:24px 0 10px;padding-top:16px;border-top:1px solid var(--line)}
 .sub:first-child{margin-top:0;padding-top:0;border-top:0}
 .note{background:var(--apple-bg);border-radius:10px;padding:12px;font-size:14px;margin:0 0 16px}
@@ -279,7 +280,8 @@ const STEPS = [
  ]},
  {t:"Autorizaciones", d:"Lea y marque las autorizaciones para enviar el formulario.", f:[
   {id:"consentimiento",type:"consent",req:1,label:"Entiendo que el programa es una asesoría de nutrición y entrenamiento que no reemplaza la atención médica, y declaro que la información que entrego es verídica."},
-  {id:"datos",type:"consent",req:1,label:"Autorizo el tratamiento de mis datos personales y de salud con fines exclusivos de la asesoría, conforme a la Ley 1581 de 2012."},
+  {id:"representante",type:"text",label:"Nombre del padre, madre o representante legal que autoriza",req:1,show:v=>v.fecha_nac && edad(v.fecha_nac) < 18,help:"El titular es menor de edad; la autorización la otorga su representante legal."},
+  {id:"datos",type:"consent",req:1,label:"Autorizo a Carlos Mario Forero López, como responsable, el tratamiento de mis datos personales y de salud (datos sensibles) con las finalidades de la asesoría, conforme a la Ley 1581 de 2012 y a la Política de tratamiento de datos.",link:["Leer la política de tratamiento de datos","../privacidad.html"]},
   {id:"fotos",type:"consent",label:"Autorizo el uso de mis fotos de progreso y resultados con fines educativos y de difusión. Puedo solicitar que no se muestre mi rostro. (Opcional)"},
   {id:"origen",type:"radio",label:"¿Cómo conoció el servicio?",opts:["Instagram","Recomendación","Club o academia","Gimnasio","Otro"]}
  ]}
@@ -320,7 +322,8 @@ function fieldHTML(f){
     return `<fieldset class="f" data-id="${f.id}"${vis}><legend>${esc(f.label)}${req}</legend>${help}<div class="${cls}">${items}</div>${ends}${err}</fieldset>`;
   }
   if(f.type === "consent"){
-    return `<div class="f" data-id="${f.id}"${vis}><label class="consent"><input type="checkbox" id="${id}"${val?" checked":""}><span>${esc(f.label)}${req}</span></label>${err}</div>`;
+    const lk = f.link ? `<p class="help" style="margin:6px 0 0"><a href="${f.link[1]}" target="_blank" rel="noopener">${esc(f.link[0])}</a></p>` : "";
+    return `<div class="f" data-id="${f.id}"${vis}><label class="consent"><input type="checkbox" id="${id}"${val?" checked":""}><span>${esc(f.label)}${req}</span></label>${lk}${err}</div>`;
   }
   const v = val == null ? "" : esc(val);
   const common = `id="${id}" name="${id}"${f.ph?` placeholder="${esc(f.ph)}"`:""}${f.ac?` autocomplete="${f.ac}"`:""}${f.help?` aria-describedby="${id}_h"`:""}`;
