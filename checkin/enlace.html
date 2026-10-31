@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Enlace de check-in · Carlos Forero</title>
+<link rel="icon" href="../logo.png">
+<style>
+:root{--bg:#F3F6F8;--surface:#fff;--ink:#15232E;--mut:#5B6B78;--line:#DCE3E8;--brand:#0B3B59;--btn:#114B70;--green-bg:#EEF6E5}
+@media (prefers-color-scheme: dark){:root{--bg:#0B151C;--surface:#13202A;--ink:#E5ECF1;--mut:#9DADB9;--line:#263843;--brand:#7DB3DD;--btn:#2D6C9C;--green-bg:#1A2B17;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:#0B3B59;color:#fff} header div{max-width:560px;margin:0 auto;padding:14px 16px} header b{display:block} header small{opacity:.85}
+main{max-width:560px;margin:16px auto;padding:20px 16px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+h1{font-size:21px;margin:0 0 6px;color:var(--brand)}
+p{margin:0 0 14px;color:var(--mut)}
+label{display:block;font-weight:600;margin:14px 0 6px}
+input{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:12px;min-height:48px}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;font:inherit;font-weight:600;border:0;border-radius:10px;min-height:50px;margin-top:12px;cursor:pointer;background:var(--btn);color:#fff;text-decoration:none}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.out{background:var(--green-bg);border-radius:10px;padding:12px;margin-top:16px;word-break:break-all;font-size:14px}
+.err{color:#B3261E;font-size:14px;margin-top:8px}
+@media (max-width:600px){main{margin:0;border-radius:0;border-left:0;border-right:0}}
+</style>
+</head>
+<body>
+<header><div><b>Carlos Forero</b><small>Herramienta interna · enlace de check-in</small></div></header>
+<main>
+  <h1>Crear el enlace de check-in de un cliente</h1>
+  <p>Escriba el nombre y el WhatsApp del cliente. El enlace abre el check-in con esos datos ya escritos, para que el cliente solo reporte su semana.</p>
+  <label for="n">Nombre del cliente</label><input id="n" type="text" autocomplete="off" placeholder="Ana María Gómez">
+  <label for="t">WhatsApp del cliente</label><input id="t" type="tel" inputmode="tel" autocomplete="off" placeholder="300 123 4567">
+  <p class="err" id="e" hidden></p>
+  <button class="btn" id="go" type="button">Crear enlace</button>
+  <div id="res" hidden>
+    <div class="out" id="link"></div>
+    <button class="btn ghost" id="copy" type="button">Copiar enlace</button>
+    <a class="btn" id="wa" target="_blank" rel="noopener">Enviar al cliente por WhatsApp</a>
+  </div>
+</main>
+<script>
+"use strict";
+const BASE = new URL("./", location.href).href;
+const $ = s => document.querySelector(s);
+$("#go").addEventListener("click", () => {
+  const n = $("#n").value.trim(), t = $("#t").value.replace(/\D/g,"");
+  const e = $("#e");
+  if(!n || t.length < 10){ e.textContent = "Escriba el nombre y un número de 10 dígitos."; e.hidden = false; return; }
+  e.hidden = true;
+  const url = BASE + "?nombre=" + encodeURIComponent(n) + "&tel=" + t;
+  $("#link").textContent = url; $("#res").hidden = false;
+  const tel = t.length === 10 ? "57" + t : t;
+  const msg = `Hola ${n.split(" ")[0]}, este es su enlace de check-in semanal. Complételo cada domingo; toma 2 minutos:\n${url}`;
+  $("#wa").href = `https://wa.me/${tel}?text=${encodeURIComponent(msg)}`;
+});
+$("#copy").addEventListener("click", async () => {
+  try{ await navigator.clipboard.writeText($("#link").textContent); $("#copy").textContent = "Enlace copiado"; }
+  catch(err){ $("#copy").textContent = "Seleccione y copie el enlace manualmente"; }
+});
+</script>
+</body>
+</html>
