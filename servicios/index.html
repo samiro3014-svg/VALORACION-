@@ -93,25 +93,43 @@ section.alt{background:var(--surface)}
 .gets b{display:block;font-size:17px;margin-bottom:4px}
 .gets span{font-size:15px;color:var(--mut)}
 
-/* Planes */
-.plans{display:grid;grid-template-columns:1fr 1.15fr 1.15fr;gap:0;margin-top:32px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface)}
-.plan{padding:28px 24px;display:flex;flex-direction:column}
-.plan + .plan{border-left:1px solid var(--line)}
-.plan.hi{background:var(--navy);color:#fff;border-left:0}
+/* Precios */
+.ph{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px}
+.seg button{font:inherit;font-size:15px;font-weight:700;border:0;background:transparent;color:var(--mut);border-radius:9px;padding:9px 16px;cursor:pointer;min-height:42px}
+.seg button[aria-pressed="true"]{background:var(--navy);color:#fff}
+.seg.dur{margin:24px 0 0}
+.plans{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:16px;margin-top:18px;align-items:stretch}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px 22px;display:flex;flex-direction:column}
+.plan.hi{background:var(--navy);color:#fff;border-color:var(--navy)}
 .plan h3{font-size:24px}
-.plan .for{font-size:15px;opacity:.8;margin:6px 0 18px;min-height:48px}
+.plan .for{font-size:15px;opacity:.8;margin:6px 0 16px}
+.badge{align-self:flex-start;background:var(--green);color:var(--navy-deep);font-size:13px;font-weight:700;border-radius:999px;padding:2px 10px;margin-bottom:10px}
 .price{font-family:var(--display);font-stretch:87.5%;font-weight:800;font-size:40px;line-height:1}
-.price small{font-family:var(--body);font-weight:400;font-size:15px;opacity:.75;margin-left:4px}
-.was{font-size:15px;margin:6px 0 2px;opacity:.75}
-.was s{opacity:.9}
-.quota{font-size:15px;opacity:.8;margin:0 0 18px}
-.plan ul{list-style:none;margin:0 0 24px;padding:0;font-size:15px;flex:1}
+.per{font-size:15px;opacity:.85;margin:8px 0 2px}
+.save{font-size:14px;font-weight:700;color:var(--green-ink);margin:0 0 16px;min-height:21px}
+.plan.hi .save{color:var(--green)}
+.plan ul{list-style:none;margin:0 0 22px;padding:0;font-size:15px;flex:1}
 .plan li{padding:7px 0 7px 26px;border-top:1px solid var(--line);position:relative}
 .plan.hi li{border-color:rgba(255,255,255,.18)}
-.plan li::before{content:"";position:absolute;left:2px;top:13px;width:12px;height:7px;border-left:2.5px solid var(--green);border-bottom:2.5px solid var(--green);transform:rotate(-45deg)}
+.plan li::before,.durs li::before,.comp li::before{content:"";position:absolute;left:2px;top:13px;width:12px;height:7px;border-left:2.5px solid var(--green);border-bottom:2.5px solid var(--green);transform:rotate(-45deg)}
 .plan .btn{width:100%}
-.plan.hi .btn.main{background:var(--green)}
-.launch{margin:16px 0 0;font-size:15px;color:var(--mut)}
+.launch{margin:14px 0 0;font-size:14px;color:var(--mut)}
+.durs{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.durs b{display:block;font-size:18px;padding-bottom:8px;border-bottom:3px solid var(--navy);margin-bottom:6px}
+.durs div:nth-child(2) b{border-color:var(--green)}
+.durs ul,.comp ul{list-style:none;margin:0;padding:0;font-size:15px}
+.durs li,.comp li{position:relative;padding:5px 0 5px 26px}
+.comp{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;margin-top:44px;background:var(--surface);border:2px solid var(--navy);border-radius:16px;padding:26px}
+.cp{display:grid;gap:12px;align-content:start}
+.cp div{background:var(--paper);border-radius:12px;padding:14px 16px}
+.cp b{display:block;font-family:var(--display);font-stretch:87.5%;font-size:28px;color:var(--navy)}
+.cp span{font-size:14px;color:var(--mut)}
+@media (max-width:900px){
+  .plans,.durs,.comp{grid-template-columns:1fr}
+  .plan.hi{order:-1}
+  .seg{width:100%} .seg button{flex:1;padding:9px 6px}
+}
 
 /* Sobre mí */
 .about{display:grid;grid-template-columns:240px 1fr;gap:40px;align-items:start}
@@ -148,11 +166,6 @@ footer.site a{color:#fff}
   .steps li::before{margin:0;grid-row:span 2}
   .steps li::after{display:none}
   .gets{grid-template-columns:1fr}
-  .plans{grid-template-columns:1fr;border:0;background:transparent;gap:16px;overflow:visible}
-  .plan{border:1px solid var(--line);border-radius:16px;background:var(--surface)}
-  .plan + .plan{border-left:1px solid var(--line)}
-  .plan.hi{background:var(--navy);order:-1}
-  .plan .for{min-height:0}
   .about .mark{max-width:160px}
   section.block{padding:56px 0}
   .float{display:flex;position:fixed;right:16px;bottom:16px;z-index:5;box-shadow:0 10px 24px rgba(3,22,35,.35)}
@@ -163,7 +176,7 @@ footer.site a{color:#fff}
 <body>
 
 <header class="top"><div class="wrap">
-  <a class="brand" href="#inicio"><img src="../logo.png" alt=""><span><b>Carlos Forero</b><small>Preparador físico &amp; Nutricionista</small></span></a>
+  <a class="brand" href="#inicio"><img src="../logo.png" alt=""><span><b>Carlos Forero</b><small>Preparador físico &amp; Nutrición deportiva</small></span></a>
   <nav aria-label="Secciones"><a href="#como-funciona">Cómo funciona</a><a href="#planes">Planes</a><a href="#preguntas">Preguntas</a></nav>
 </div></header>
 
@@ -212,7 +225,7 @@ footer.site a{color:#fff}
   <ol class="steps">
     <li><b>Contacto</b><span>Escribe por WhatsApp, elige su plan y recibe el enlace de valoración.</span></li>
     <li><b>Valoración</b><span>Formulario de 12 a 15 minutos desde el celular.</span></li>
-    <li><b>Videollamada</b><span>En el plan Rendimiento, se revisan sus datos, su rutina y su calendario.</span></li>
+    <li><b>Videollamada</b><span>En los planes trimestral y semestral, se revisan sus datos, su rutina y su calendario.</span></li>
     <li><b>Su plan</b><span>Informe y plan en PDF y versión para celular, en máximo 72 horas hábiles.</span></li>
     <li><b>Seguimiento</b><span>Check-in de 2 minutos y ajustes según sus resultados.</span></li>
   </ol>
@@ -231,38 +244,26 @@ footer.site a{color:#fff}
 </div></section>
 
 <section class="block alt" id="planes"><div class="wrap">
-  <h2>Planes y precios</h2>
-  <p class="mut">Ciclos de 12 semanas. Precios en pesos colombianos.</p>
-  <div class="plans">
-    <article class="plan">
-      <h3>Valoración única</h3>
-      <p class="for">Para conocer su punto de partida y recibir recomendaciones antes de decidir.</p>
-      <div class="price">$150.000</div>
-      <p class="was">Precio regular <s>$180.000</s></p>
-      <p class="quota">Pago único</p>
-      <ul><li>Formulario de valoración</li><li>Informe de valoración escrito</li><li>Recomendaciones generales de alimentación</li><li>Se descuenta del plan si lo contrata en los 15 días siguientes</li></ul>
-      <a class="btn dark" href="https://wa.me/573506343112?text=Hola%20Carlos%2C%20quiero%20la%20valoraci%C3%B3n%20%C3%BAnica." target="_blank" rel="noopener">Pedir valoración</a>
-    </article>
-    <article class="plan">
-      <h3>Esencial</h3>
-      <p class="for">Para cambiar la composición corporal con un plan claro y seguimiento cada 2 semanas.</p>
-      <div class="price">$440.000<small>12 semanas</small></div>
-      <p class="was">Precio regular <s>$540.000</s></p>
-      <p class="quota">O 3 cuotas mensuales de $199.000</p>
-      <ul><li>Informe de valoración</li><li>Plan de alimentación con reemplazos y lista de mercado</li><li>Plan de entrenamiento</li><li>Check-in cada 2 semanas y ajuste mensual</li><li>Respuesta por WhatsApp en 48 horas hábiles</li></ul>
-      <a class="btn dark" href="https://wa.me/573506343112?text=Hola%20Carlos%2C%20quiero%20el%20plan%20Esencial." target="_blank" rel="noopener">Empezar con Esencial</a>
-    </article>
-    <article class="plan hi">
-      <h3>Rendimiento</h3>
-      <p class="for">Para deportistas que compiten o entrenan con carga alta, y para quien quiere un seguimiento más cercano.</p>
-      <div class="price">$720.000<small>12 semanas</small></div>
-      <p class="was">Precio regular <s>$900.000</s></p>
-      <p class="quota">O 3 cuotas mensuales de $330.000</p>
-      <ul><li>Videollamada de valoración de 30 a 40 minutos</li><li>Todo lo del plan Esencial</li><li>Protocolo de entrenamiento, competencia, hidratación y suplementos</li><li>Check-in semanal y ajuste cada 2 semanas</li><li>Videollamada mensual de seguimiento</li><li>Respuesta por WhatsApp en 24 horas hábiles</li></ul>
-      <a class="btn main" href="https://wa.me/573506343112?text=Hola%20Carlos%2C%20quiero%20el%20plan%20Rendimiento." target="_blank" rel="noopener">Empezar con Rendimiento</a>
-    </article>
+  <div class="ph">
+    <div><h2>Planes y precios</h2><p class="mut">Tarifa de lanzamiento: 5 cupos, con inscripción hasta el 31 de diciembre de 2026.</p></div>
+    <div class="seg" id="cur" role="group" aria-label="Moneda"><button type="button" data-v="COP" aria-pressed="true">COP</button><button type="button" data-v="USD" aria-pressed="false">USD</button><button type="button" data-v="EUR" aria-pressed="false">EUR</button></div>
   </div>
-  <p class="launch">Precio de lanzamiento para los primeros 10 clientes, con pago del ciclo completo. El pago en cuotas no aplica al precio de lanzamiento.</p>
+  <div class="seg dur" id="dur" role="group" aria-label="Duración"><button type="button" data-v="m" aria-pressed="false">Mensual</button><button type="button" data-v="t" aria-pressed="true">Trimestral</button><button type="button" data-v="s" aria-pressed="false">Semestral</button></div>
+  <div class="plans" id="plans"></div>
+  <p class="launch" id="fx"></p>
+
+  <h3 style="margin:44px 0 16px">Qué incluye cada duración</h3>
+  <div class="durs">
+    <div><b>Mensual</b><ul><li>Sin permanencia</li><li>Check-in cada 2 semanas</li><li>1 actualización del plan</li><li>Respuesta por WhatsApp en 48 horas hábiles</li></ul></div>
+    <div><b>Trimestral</b><ul><li>Videollamada de inicio</li><li>Check-in semanal</li><li>Actualización del plan cada mes</li><li>Informe de progreso al terminar</li><li>Respuesta en 24 horas hábiles</li></ul></div>
+    <div><b>Semestral</b><ul><li>Videollamada de inicio y una cada mes</li><li>Check-in semanal</li><li>Actualización del plan cada mes</li><li>Informe de progreso cada 3 meses</li><li>1 plan de competencia incluido</li><li>Respuesta en 24 horas hábiles</li></ul></div>
+  </div>
+
+  <div class="comp">
+    <div><h3>Plan de competencia</h3><p class="mut" style="margin:6px 0 10px">Servicio aparte, para clientes activos o nuevos.</p>
+      <ul><li>Alimentación de las semanas previas al evento</li><li>Estrategia del día: antes, durante y después</li><li>Hidratación, geles y suplementos para competir</li><li>Protocolo de recuperación</li></ul></div>
+    <div class="cp" id="comp"></div>
+  </div>
 </div></section>
 
 <section class="block"><div class="wrap about">
@@ -282,7 +283,7 @@ footer.site a{color:#fff}
     <details><summary>¿Cuánto tarda en llegar el plan?</summary><p>Máximo 72 horas hábiles después de completar la valoración o la videollamada.</p></details>
     <details><summary>¿Trabaja con menores de edad?</summary><p>Sí, con deportistas juveniles. El padre, la madre o el representante legal autoriza el tratamiento de los datos en el formulario.</p></details>
     <details><summary>¿Qué pasa si viajo o tengo una competencia?</summary><p>Avise con 3 días de anticipación y el plan se adapta: comidas de viaje, horarios del torneo o de la carrera, e hidratación.</p></details>
-    <details><summary>¿Cómo se paga?</summary><p>El ciclo completo por adelantado, con el precio de lanzamiento, o en 3 cuotas mensuales. Puede pagar por Nequi, Bre-B o transferencia a Davivienda o Banco Falabella. Los datos de pago se envían por WhatsApp al confirmar su plan, y el servicio inicia al recibir el comprobante.</p></details>
+    <details><summary>¿Cómo se paga?</summary><p>El plan mensual se paga cada mes. El trimestral y el semestral se pagan por adelantado. En Colombia puede pagar por Nequi, Bre-B o transferencia a Davivienda o Banco Falabella; desde el exterior, el medio de pago se acuerda por WhatsApp. El servicio inicia al recibir el comprobante.</p></details>
   </div>
 </div></section>
 </main>
@@ -292,10 +293,55 @@ footer.site a{color:#fff}
   <a class="btn main" href="https://wa.me/573506343112?text=Hola%20Carlos%2C%20quiero%20empezar%20con%20la%20valoraci%C3%B3n." target="_blank" rel="noopener">Escribir por WhatsApp</a>
 </div></section>
 <footer class="site"><div class="wrap">
-  <span>Carlos Forero, Preparador físico &amp; Nutricionista. Bogotá, Colombia.</span>
+  <span>Carlos Forero, Preparador físico &amp; Nutrición deportiva. Bogotá, Colombia.</span>
   <span><a href="https://wa.me/573506343112" target="_blank" rel="noopener">WhatsApp 350 634 3112</a> &nbsp; <a href="https://www.instagram.com/carl_fo/" target="_blank" rel="noopener">Instagram @CARL_FO</a> &nbsp; <a href="../privacidad.html">Política de datos</a></span>
 </div></footer>
 
 <a class="btn main float" href="https://wa.me/573506343112?text=Hola%20Carlos%2C%20quiero%20informaci%C3%B3n." target="_blank" rel="noopener">WhatsApp</a>
+<script>
+"use strict";
+/* Precios: total por duración en cada moneda. Trimestral y semestral se pagan por adelantado. */
+const P = {
+  nut:{COP:{m:220000,t:570000,s:1050000}, USD:{m:79,t:199,s:359}, EUR:{m:69,t:179,s:319}},
+  ent:{COP:{m:190000,t:490000,s:900000},  USD:{m:69,t:169,s:309}, EUR:{m:59,t:149,s:279}},
+  amb:{COP:{m:350000,t:900000,s:1680000}, USD:{m:119,t:309,s:579}, EUR:{m:109,t:279,s:519}}
+};
+const COMP = {COP:[120000,200000], USD:[39,69], EUR:[35,59]};
+const MESES = {m:1,t:3,s:6}, DN = {m:"mensual",t:"trimestral",s:"semestral"};
+const SERV = [
+  {k:"nut", n:"Nutrición", f:"Para comer bien según su objetivo, sin complicarse.", l:["Valoración e informe de valoración","Plan de alimentación en gramos, con reemplazos y lista de mercado","Calorías para días de entreno y de descanso","Guía de suplementación","Guía para comer fuera de casa"]},
+  {k:"ent", n:"Entrenamiento", f:"Para progresar en cada sesión, en gimnasio o en casa.", l:["Valoración inicial","Rutina según su nivel y objetivo","Plan de cardio y metas de esfuerzo","Registro de cargas y progresión"]},
+  {k:"amb", n:"Nutrición + entrenamiento", f:"El plan completo: comida y entrenamiento coordinados.", hi:1, l:["Todo lo de Nutrición y de Entrenamiento","Comida y entreno coordinados en un solo plan","Calorías ajustadas a la carga de cada día","Prioridad en las respuestas"]}
+];
+let cur = "COP", dur = "t";
+const fmt = (v,c) => c === "COP" ? "$" + v.toLocaleString("es-CO") : c === "USD" ? "US$" + v.toLocaleString("es-CO") : v.toLocaleString("es-CO") + " €";
+const perMes = (v,c,d) => { const x = v / MESES[d]; return c === "COP" ? Math.round(x/1000)*1000 : Math.round(x); };
+function render(){
+  document.getElementById("plans").innerHTML = SERV.map(s => {
+    const p = P[s.k][cur], v = p[dur];
+    const ahorro = dur === "m" ? 0 : Math.round((1 - v/(p.m*MESES[dur]))*100);
+    const sep = s.k === "amb" ? P.nut[cur][dur] + P.ent[cur][dur] - v : 0;
+    const per = dur === "m" ? "por mes, sin permanencia" : `${fmt(perMes(v,cur,dur),cur)} al mes, pago único por ${MESES[dur]} meses`;
+    const save = dur === "m" ? (sep ? `${fmt(sep,cur)} menos que por separado` : "") : `Ahorra ${ahorro} % frente al plan mensual` + (sep ? ` y ${fmt(sep,cur)} frente a contratarlos por separado` : "");
+    const msg = encodeURIComponent(`Hola Carlos, quiero el plan ${s.n} ${DN[dur]} (${fmt(v,cur)}).`);
+    return `<article class="plan${s.hi?" hi":""}">${s.hi?'<span class="badge">Recomendado</span>':""}<h3>${s.n}</h3><p class="for">${s.f}</p>
+      <div class="price">${fmt(v,cur)}</div><p class="per">${per}</p><p class="save">${save}</p>
+      <ul>${s.l.map(x => `<li>${x}</li>`).join("")}</ul>
+      <a class="btn ${s.hi?"main":"dark"}" href="https://wa.me/573506343112?text=${msg}" target="_blank" rel="noopener">Elegir ${s.n}</a></article>`;
+  }).join("");
+  const c = COMP[cur];
+  document.getElementById("comp").innerHTML = `<div><b>${fmt(c[0],cur)}</b><span>Evento de un día: carrera de 5K o 10K, partido o torneo de fin de semana</span></div><div><b>${fmt(c[1],cur)}</b><span>Evento de resistencia: media maratón, maratón, triatlón, HYROX o ultra</span></div><div style="background:var(--green-soft)"><span>Incluido un plan sin costo en el plan semestral.</span></div>`;
+  document.getElementById("fx").textContent = cur === "COP"
+    ? "Precios en pesos colombianos. El plan mensual se paga cada mes; el trimestral y el semestral, por adelantado."
+    : "Precios para clientes fuera de Colombia. Incluyen el costo de los pagos internacionales; el medio de pago se acuerda por WhatsApp.";
+}
+function bind(id, set){
+  const g = document.getElementById(id);
+  g.addEventListener("click", e => { const b = e.target.closest("button"); if(!b) return;
+    g.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false")); set(b.dataset.v); render(); });
+}
+bind("cur", v => cur = v); bind("dur", v => dur = v);
+render();
+</script>
 </body>
 </html>

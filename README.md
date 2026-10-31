@@ -1,6 +1,6 @@
 # Valoración inicial · Carlos Forero
 
-Formulario web de valoración inicial para clientes de Carlos Forero, preparador físico y nutricionista.
+Formulario web de valoración inicial para clientes de Carlos Forero, preparador físico con enfoque en nutrición deportiva.
 
 - Página pública: https://samiro3014-svg.github.io/VALORACION-/
 - Evaluación profesional: agregar `#evaluacion` al final del enlace.
