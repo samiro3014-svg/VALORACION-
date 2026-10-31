@@ -283,7 +283,7 @@ footer.site a{color:#fff}
     <details><summary>¿Cuánto tarda en llegar el plan?</summary><p>Máximo 72 horas hábiles después de completar la valoración o la videollamada.</p></details>
     <details><summary>¿Trabaja con menores de edad?</summary><p>Sí, con deportistas juveniles. El padre, la madre o el representante legal autoriza el tratamiento de los datos en el formulario.</p></details>
     <details><summary>¿Qué pasa si viajo o tengo una competencia?</summary><p>Avise con 3 días de anticipación y el plan se adapta: comidas de viaje, horarios del torneo o de la carrera, e hidratación.</p></details>
-    <details><summary>¿Cómo se paga?</summary><p>El plan mensual se paga cada mes. El trimestral y el semestral se pagan por adelantado. En Colombia puede pagar por Nequi, Bre-B o transferencia a Davivienda o Banco Falabella; desde el exterior, el medio de pago se acuerda por WhatsApp. El servicio inicia al recibir el comprobante.</p></details>
+    <details><summary>¿Cómo se paga?</summary><p>El plan mensual se paga cada mes. El trimestral y el semestral se pagan por adelantado. En Colombia puede pagar por Nequi, Bre-B o transferencia a Davivienda o Banco Falabella. Desde el exterior, por PayPal o por transferencia en dólares o en euros. Los datos de pago se envían por WhatsApp y el servicio inicia al recibir el comprobante.</p></details>
   </div>
 </div></section>
 </main>
@@ -302,9 +302,9 @@ footer.site a{color:#fff}
 "use strict";
 /* Precios: total por duración en cada moneda. Trimestral y semestral se pagan por adelantado. */
 const P = {
-  nut:{COP:{m:220000,t:570000,s:1050000}, USD:{m:79,t:199,s:359}, EUR:{m:69,t:179,s:319}},
-  ent:{COP:{m:190000,t:490000,s:900000},  USD:{m:69,t:169,s:309}, EUR:{m:59,t:149,s:279}},
-  amb:{COP:{m:350000,t:900000,s:1680000}, USD:{m:119,t:309,s:579}, EUR:{m:109,t:279,s:519}}
+  nut:{COP:{m:220000,t:570000,s:1050000}, USD:{m:79,t:199,s:379}, EUR:{m:69,t:179,s:329}},
+  ent:{COP:{m:190000,t:490000,s:900000},  USD:{m:69,t:179,s:329}, EUR:{m:59,t:149,s:279}},
+  amb:{COP:{m:350000,t:900000,s:1680000}, USD:{m:119,t:309,s:569}, EUR:{m:109,t:279,s:519}}
 };
 const COMP = {COP:[120000,200000], USD:[39,69], EUR:[35,59]};
 const MESES = {m:1,t:3,s:6}, DN = {m:"mensual",t:"trimestral",s:"semestral"};
@@ -333,7 +333,7 @@ function render(){
   document.getElementById("comp").innerHTML = `<div><b>${fmt(c[0],cur)}</b><span>Evento de un día: carrera de 5K o 10K, partido o torneo de fin de semana</span></div><div><b>${fmt(c[1],cur)}</b><span>Evento de resistencia: media maratón, maratón, triatlón, HYROX o ultra</span></div><div style="background:var(--green-soft)"><span>Incluido un plan sin costo en el plan semestral.</span></div>`;
   document.getElementById("fx").textContent = cur === "COP"
     ? "Precios en pesos colombianos. El plan mensual se paga cada mes; el trimestral y el semestral, por adelantado."
-    : "Precios para clientes fuera de Colombia. Incluyen el costo de los pagos internacionales; el medio de pago se acuerda por WhatsApp.";
+    : "Precios para clientes fuera de Colombia. Incluyen el costo de los pagos internacionales. Pago por PayPal o transferencia en dólares o euros.";
 }
 function bind(id, set){
   const g = document.getElementById(id);
