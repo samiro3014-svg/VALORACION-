@@ -4,9 +4,10 @@ Formulario web de valoración inicial para clientes de Carlos Forero, preparador
 
 - Página pública: https://samiro3014-svg.github.io/VALORACION-/
 - Evaluación profesional: agregar `#evaluacion` al final del enlace.
+- Web de servicios: https://samiro3014-svg.github.io/VALORACION-/servicios/
 - Formulario nuevo (versión 2): https://samiro3014-svg.github.io/VALORACION-/nuevo/
 - Check-in semanal: https://samiro3014-svg.github.io/VALORACION-/checkin/
-  Enlace personal por cliente: agregar `?nombre=Nombre%20Apellido&tel=3001234567`
+  Crear el enlace personal de cada cliente: https://samiro3014-svg.github.io/VALORACION-/checkin/enlace.html
 - Política de tratamiento de datos: https://samiro3014-svg.github.io/VALORACION-/privacidad.html
 
 ## Funcionamiento

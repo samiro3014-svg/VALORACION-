@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carlos Forero · Nutrición deportiva y composición corporal online</title>
+<meta name="description" content="Planes de nutrición y entrenamiento online con valoración, plan en gramos y seguimiento semanal. Running, tenis, fútbol, HYROX, CrossFit, pérdida de grasa y ganancia muscular.">
+<meta name="theme-color" content="#0B3B59">
+<link rel="icon" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@87.5,700;87.5,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B3B59; --navy-deep:#072A40; --green:#83C341; --green-ink:#3F7F1E; --green-soft:#E7F2DA;
+  --paper:#F5F7F4; --surface:#FFFFFF; --ink:#13222C; --mut:#56666F; --line:#D6DFE3;
+  --display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --body:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 var(--body)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--green);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--display);font-stretch:87.5%;line-height:1.08;letter-spacing:-.01em;margin:0}
+h1{font-size:clamp(38px,6vw,62px);font-weight:800}
+h2{font-size:clamp(28px,3.6vw,40px);font-weight:800;margin-bottom:12px}
+h3{font-size:21px;font-weight:700}
+p{margin:0 0 14px;max-width:62ch}
+.mut{color:var(--mut)}
+
+/* Barra superior */
+.top{background:var(--navy);color:#fff}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand img{width:48px;height:32px;object-fit:contain;background:#fff;border-radius:8px;padding:2px 4px}
+.brand b{display:block;font-size:16px} .brand small{display:block;font-size:13px;opacity:.8}
+.top nav{display:flex;gap:20px;font-size:15px}
+.top nav a{text-decoration:none;opacity:.9} .top nav a:hover{opacity:1;text-decoration:underline}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 24px;border-radius:12px;font-weight:700;font-size:16px;text-decoration:none;border:2px solid transparent}
+.btn.main{background:var(--green);color:var(--navy-deep)}
+.btn.main:hover{background:#93D052}
+.btn.line{border-color:currentColor}
+.btn.dark{background:var(--navy);color:#fff}
+
+/* Hero */
+.hero{background:var(--navy);color:#fff;padding:56px 0 72px;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero p.sub{font-size:19px;opacity:.9;margin:20px 0 28px}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:12px}
+.sports{margin:28px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.sports li{border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:4px 14px;font-size:14px}
+
+/* Fragmento del plan: el elemento distintivo */
+.sheet{background:var(--surface);color:var(--ink);border-radius:16px;padding:22px 22px 18px;box-shadow:0 30px 60px -20px rgba(3,22,35,.55);transform:rotate(-1.5deg)}
+.sheet header{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--navy);padding-bottom:10px;margin-bottom:12px}
+.sheet header b{font-family:var(--display);font-stretch:87.5%;font-size:24px;color:var(--navy)}
+.sheet header span{color:var(--mut);font-size:14px}
+.grp{display:grid;grid-template-columns:96px 1fr;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+.grp:last-of-type{border-bottom:0}
+.grp > span{font-weight:700;color:var(--navy);font-size:14px;padding-top:1px}
+.grp p{margin:0}
+.grp em{font-style:normal;color:var(--mut)}
+.or{color:var(--green-ink);font-weight:700;margin:0 4px}
+.tag{display:inline-block;font-size:12px;font-weight:700;border-radius:6px;padding:1px 7px;margin:0 6px 2px 0;color:#fff;background:var(--navy)}
+.tag.d{background:var(--green-ink)}
+.sheet footer{margin-top:10px;font-size:13px;color:var(--mut)}
+
+/* Secciones */
+section.block{padding:72px 0}
+section.alt{background:var(--surface)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.line-col{border-top:4px solid var(--navy);padding-top:18px}
+.line-col.g{border-color:var(--green)}
+.line-col ul{margin:12px 0 0;padding-left:20px} .line-col li{margin:6px 0}
+
+/* Proceso */
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:0;counter-reset:s}
+.steps li{counter-increment:s;padding:0 18px 0 0;position:relative}
+.steps li::before{content:counter(s);display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--display);font-weight:800;font-size:20px;margin-bottom:14px;position:relative;z-index:1}
+.steps li::after{content:"";position:absolute;top:21px;left:44px;right:0;height:2px;background:var(--line)}
+.steps li:last-child::after{display:none}
+.steps b{display:block;font-size:17px;margin-bottom:4px}
+.steps span{font-size:15px;color:var(--mut)}
+
+/* Entregables */
+.gets{display:grid;grid-template-columns:repeat(3,1fr);gap:28px 40px;margin-top:28px}
+.gets div{border-left:3px solid var(--green);padding-left:16px}
+.gets b{display:block;font-size:17px;margin-bottom:4px}
+.gets span{font-size:15px;color:var(--mut)}
+
+/* Planes */
+.plans{display:grid;grid-template-columns:1fr 1.15fr 1.15fr;gap:0;margin-top:32px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface)}
+.plan{padding:28px 24px;display:flex;flex-direction:column}
+.plan + .plan{border-left:1px solid var(--line)}
+.plan.hi{background:var(--navy);color:#fff;border-left:0}
+.plan h3{font-size:24px}
+.plan .for{font-size:15px;opacity:.8;margin:6px 0 18px;min-height:48px}
+.price{font-family:var(--display);font-stretch:87.5%;font-weight:800;font-size:40px;line-height:1}
+.price small{font-family:var(--body);font-weight:400;font-size:15px;opacity:.75;margin-left:4px}
+.was{font-size:15px;margin:6px 0 2px;opacity:.75}
+.was s{opacity:.9}
+.quota{font-size:15px;opacity:.8;margin:0 0 18px}
+.plan ul{list-style:none;margin:0 0 24px;padding:0;font-size:15px;flex:1}
+.plan li{padding:7px 0 7px 26px;border-top:1px solid var(--line);position:relative}
+.plan.hi li{border-color:rgba(255,255,255,.18)}
+.plan li::before{content:"";position:absolute;left:2px;top:13px;width:12px;height:7px;border-left:2.5px solid var(--green);border-bottom:2.5px solid var(--green);transform:rotate(-45deg)}
+.plan .btn{width:100%}
+.plan.hi .btn.main{background:var(--green)}
+.launch{margin:16px 0 0;font-size:15px;color:var(--mut)}
+
+/* Sobre mí */
+.about{display:grid;grid-template-columns:240px 1fr;gap:40px;align-items:start}
+.about .mark{background:var(--navy);border-radius:16px;aspect-ratio:1;display:flex;align-items:center;justify-content:center}
+.about .mark img{width:70%;background:#fff;border-radius:14px;padding:10px}
+
+/* Preguntas */
+details{border-top:1px solid var(--line);padding:18px 0}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;font-weight:700;font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:24px;line-height:1;color:var(--green-ink)}
+details[open] summary::after{content:"−"}
+details p{margin:10px 0 0;color:var(--mut)}
+
+/* Cierre */
+.close{background:var(--navy-deep);color:#fff;padding:64px 0}
+.close .wrap{display:flex;justify-content:space-between;align-items:center;gap:28px;flex-wrap:wrap}
+.close p{opacity:.85;margin:8px 0 0}
+footer.site{background:var(--navy-deep);color:rgba(255,255,255,.7);font-size:14px;padding:0 0 32px}
+footer.site .wrap{border-top:1px solid rgba(255,255,255,.15);padding-top:20px;display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+footer.site a{color:#fff}
+
+/* Botón flotante de WhatsApp en celular */
+.float{display:none}
+
+@media (max-width:900px){
+  .top nav{display:none}
+  .hero{padding:40px 0 56px}
+  .hero .wrap,.split,.about{grid-template-columns:1fr;gap:32px}
+  .sheet{transform:none}
+  .steps{grid-template-columns:1fr;gap:18px}
+  .steps li{display:grid;grid-template-columns:44px 1fr;column-gap:14px;padding:0}
+  .steps li::before{margin:0;grid-row:span 2}
+  .steps li::after{display:none}
+  .gets{grid-template-columns:1fr}
+  .plans{grid-template-columns:1fr;border:0;background:transparent;gap:16px;overflow:visible}
+  .plan{border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+  .plan + .plan{border-left:1px solid var(--line)}
+  .plan.hi{background:var(--navy);order:-1}
+  .plan .for{min-height:0}
+  .about .mark{max-width:160px}
+  section.block{padding:56px 0}
+  .float{display:flex;position:fixed;right:16px;bottom:16px;z-index:5;box-shadow:0 10px 24px rgba(3,22,35,.35)}
+  footer.site{padding-bottom:96px}
+}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="#inicio"><img src="../logo.png" alt=""><span><b>Carlos Forero</b><small>Preparador físico &amp; Nutricionista</small></span></a>
+  <nav aria-label="Secciones"><a href="#como-funciona">Cómo funciona</a><a href="#planes">Planes</a><a href="#preguntas">Preguntas</a></nav>
+</div></header>
+
+<main id="inicio">
+<section class="hero"><div class="wrap">
+  <div>
+    <h1>Un plan que dice exactamente qué comer, en gramos, y se ajusta cada semana.</h1>
+    <p class="sub">Nutrición y entrenamiento online para deportistas y para personas que quieren bajar grasa o ganar masa muscular. Todo parte de una valoración y se corrige con sus datos reales.</p>
+    <div class="ctas">
+      <a class="btn main" href="https://wa.me/573506343112?text=Hola%20Carlos%2C%20quiero%20informaci%C3%B3n%20sobre%20la%20valoraci%C3%B3n." target="_blank" rel="noopener">Escribir por WhatsApp</a>
+      <a class="btn line" href="#planes">Ver planes y precios</a>
+    </div>
+    <ul class="sports" aria-label="Deportes"><li>Running</li><li>Tenis de campo</li><li>Fútbol</li><li>HYROX</li><li>CrossFit</li></ul>
+  </div>
+
+  <article class="sheet" aria-label="Ejemplo de una comida del plan">
+    <header><b>Almuerzo</b><span>12:30</span></header>
+    <div class="grp"><span>Proteína</span><p>Pechuga de pollo 125 g <em>(1 palma)</em><span class="or">o</span>Tilapia 140 g</p></div>
+    <div class="grp"><span>Carbohidrato</span><p><span class="tag">Entreno</span>Arroz 100 g <em>(6½ cdas)</em><span class="or">o</span>Papa 155 g<br><span class="tag d">Descanso</span>Arroz 60 g <em>(4 cdas)</em><span class="or">o</span>Papa 95 g</p></div>
+    <div class="grp"><span>Grasa</span><p>¼ de aguacate <em>(50 g)</em> + 1 cdta de aceite de oliva</p></div>
+    <div class="grp"><span>Verduras</span><p>2 tazas, medio plato</p></div>
+    <footer>Ejemplo de una comida del plan. Cada persona recibe sus propias cantidades.</footer>
+  </article>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <h2>Para quién es</h2>
+  <p class="mut">Dos líneas de trabajo, con la misma metodología: medir, planificar y ajustar.</p>
+  <div class="split" style="margin-top:28px">
+    <div class="line-col">
+      <h3>Rendimiento deportivo</h3>
+      <p class="mut" style="margin-top:8px">Para corredores, tenistas, futbolistas y competidores de HYROX y CrossFit, desde juveniles hasta veteranos.</p>
+      <ul><li>Alimentación según la carga de cada día de entrenamiento.</li><li>Plan para el día de competencia, torneo o carrera.</li><li>Hidratación según su sudoración y suplementos con evidencia.</li></ul>
+    </div>
+    <div class="line-col g">
+      <h3>Composición corporal</h3>
+      <p class="mut" style="margin-top:8px">Para quien quiere reducir grasa, ganar masa muscular o cambiar sus hábitos sin dietas extremas.</p>
+      <ul><li>Porciones claras, con reemplazos para no comer siempre lo mismo.</li><li>Lista de mercado y guía para comer fuera de casa.</li><li>Ajustes basados en su peso promedio y su cintura, no en el peso de un día.</li></ul>
+    </div>
+  </div>
+</div></section>
+
+<section class="block alt" id="como-funciona"><div class="wrap">
+  <h2>Cómo funciona</h2>
+  <p class="mut">Desde el primer mensaje hasta el ajuste semanal, cada paso tiene un plazo definido.</p>
+  <ol class="steps">
+    <li><b>Contacto</b><span>Escribe por WhatsApp, elige su plan y recibe el enlace de valoración.</span></li>
+    <li><b>Valoración</b><span>Formulario de 12 a 15 minutos desde el celular.</span></li>
+    <li><b>Videollamada</b><span>En el plan Rendimiento, se revisan sus datos, su rutina y su calendario.</span></li>
+    <li><b>Su plan</b><span>Informe y plan en PDF y versión para celular, en máximo 72 horas hábiles.</span></li>
+    <li><b>Seguimiento</b><span>Check-in de 2 minutos y ajustes según sus resultados.</span></li>
+  </ol>
+</div></section>
+
+<section class="block"><div class="wrap">
+  <h2>Qué recibe</h2>
+  <div class="gets">
+    <div><b>Informe de valoración</b><span>Sus medidas explicadas, su composición corporal, su gasto de energía y su objetivo por etapas.</span></div>
+    <div><b>Plan de alimentación</b><span>Comidas en gramos y medidas caseras, opciones de reemplazo y un día de ejemplo.</span></div>
+    <div><b>Lista de mercado</b><span>Cantidades para la semana y una rutina de preparación de una hora.</span></div>
+    <div><b>Plan de entrenamiento</b><span>Ejercicios, series, repeticiones y registro de cargas según su nivel.</span></div>
+    <div><b>Check-in semanal</b><span>Un formulario corto que muestra su promedio de peso y su avance.</span></div>
+    <div><b>Reevaluaciones</b><span>Controles en las semanas 6 y 12 con informe de progreso.</span></div>
+  </div>
+</div></section>
+
+<section class="block alt" id="planes"><div class="wrap">
+  <h2>Planes y precios</h2>
+  <p class="mut">Ciclos de 12 semanas. Precios en pesos colombianos.</p>
+  <div class="plans">
+    <article class="plan">
+      <h3>Valoración única</h3>
+      <p class="for">Para conocer su punto de partida y recibir recomendaciones antes de decidir.</p>
+      <div class="price">$150.000</div>
+      <p class="was">Precio regular <s>$180.000</s></p>
+      <p class="quota">Pago único</p>
+      <ul><li>Formulario de valoración</li><li>Informe de valoración escrito</li><li>Recomendaciones generales de alimentación</li><li>Se descuenta del plan si lo contrata en los 15 días siguientes</li></ul>
+      <a class="btn dark" href="https://wa.me/573506343112?text=Hola%20Carlos%2C%20quiero%20la%20valoraci%C3%B3n%20%C3%BAnica." target="_blank" rel="noopener">Pedir valoración</a>
+    </article>
+    <article class="plan">
+      <h3>Esencial</h3>
+      <p class="for">Para cambiar la composición corporal con un plan claro y seguimiento cada 2 semanas.</p>
+      <div class="price">$440.000<small>12 semanas</small></div>
+      <p class="was">Precio regular <s>$540.000</s></p>
+      <p class="quota">O 3 cuotas mensuales de $199.000</p>
+      <ul><li>Informe de valoración</li><li>Plan de alimentación con reemplazos y lista de mercado</li><li>Plan de entrenamiento</li><li>Check-in cada 2 semanas y ajuste mensual</li><li>Respuesta por WhatsApp en 48 horas hábiles</li></ul>
+      <a class="btn dark" href="https://wa.me/573506343112?text=Hola%20Carlos%2C%20quiero%20el%20plan%20Esencial." target="_blank" rel="noopener">Empezar con Esencial</a>
+    </article>
+    <article class="plan hi">
+      <h3>Rendimiento</h3>
+      <p class="for">Para deportistas que compiten o entrenan con carga alta, y para quien quiere un seguimiento más cercano.</p>
+      <div class="price">$720.000<small>12 semanas</small></div>
+      <p class="was">Precio regular <s>$900.000</s></p>
+      <p class="quota">O 3 cuotas mensuales de $330.000</p>
+      <ul><li>Videollamada de valoración de 30 a 40 minutos</li><li>Todo lo del plan Esencial</li><li>Protocolo de entrenamiento, competencia, hidratación y suplementos</li><li>Check-in semanal y ajuste cada 2 semanas</li><li>Videollamada mensual de seguimiento</li><li>Respuesta por WhatsApp en 24 horas hábiles</li></ul>
+      <a class="btn main" href="https://wa.me/573506343112?text=Hola%20Carlos%2C%20quiero%20el%20plan%20Rendimiento." target="_blank" rel="noopener">Empezar con Rendimiento</a>
+    </article>
+  </div>
+  <p class="launch">Precio de lanzamiento para los primeros 10 clientes, con pago del ciclo completo. El pago en cuotas no aplica al precio de lanzamiento.</p>
+</div></section>
+
+<section class="block"><div class="wrap about">
+  <div class="mark"><img src="../logo.png" alt="Logo de Carlos Forero"></div>
+  <div>
+    <h2>Carlos Mario Forero López</h2>
+    <p>Preparador físico y nutricionista, con enfoque en nutrición deportiva. Trabajo con tenistas y deportistas de resistencia, y con personas que buscan bajar grasa o ganar masa muscular.</p>
+    <p>Mi método es simple: medir antes de recomendar, entregar un plan que se pueda cumplir y ajustarlo con datos cada semana. Por eso cada plan incluye cantidades exactas, reemplazos y un canal directo para resolver dudas.</p>
+  </div>
+</div></section>
+
+<section class="block alt" id="preguntas"><div class="wrap">
+  <h2>Preguntas frecuentes</h2>
+  <div style="margin-top:20px;max-width:780px">
+    <details><summary>¿El servicio es presencial?</summary><p>No. Todo el proceso es online: formulario, videollamada, entrega del plan y seguimiento por WhatsApp. Puede estar en cualquier ciudad.</p></details>
+    <details><summary>¿Qué necesito para empezar?</summary><p>Una báscula, una cinta métrica y su celular. Si es deportista, su calendario de entrenamientos y competencias.</p></details>
+    <details><summary>¿Cuánto tarda en llegar el plan?</summary><p>Máximo 72 horas hábiles después de completar la valoración o la videollamada.</p></details>
+    <details><summary>¿Trabaja con menores de edad?</summary><p>Sí, con deportistas juveniles. El padre, la madre o el representante legal autoriza el tratamiento de los datos en el formulario.</p></details>
+    <details><summary>¿Qué pasa si viajo o tengo una competencia?</summary><p>Avise con 3 días de anticipación y el plan se adapta: comidas de viaje, horarios del torneo o de la carrera, e hidratación.</p></details>
+    <details><summary>¿Cómo se paga?</summary><p>El ciclo completo por adelantado, con el precio de lanzamiento, o en 3 cuotas mensuales. Los medios de pago se informan por WhatsApp.</p></details>
+  </div>
+</div></section>
+</main>
+
+<section class="close"><div class="wrap">
+  <div><h2 style="margin:0">Empiece con su valoración</h2><p>Escriba y le respondo con los pasos y el enlace del formulario.</p></div>
+  <a class="btn main" href="https://wa.me/573506343112?text=Hola%20Carlos%2C%20quiero%20empezar%20con%20la%20valoraci%C3%B3n." target="_blank" rel="noopener">Escribir por WhatsApp</a>
+</div></section>
+<footer class="site"><div class="wrap">
+  <span>Carlos Forero, Preparador físico &amp; Nutricionista. Bogotá, Colombia.</span>
+  <span><a href="https://wa.me/573506343112" target="_blank" rel="noopener">WhatsApp 350 634 3112</a> &nbsp; <a href="https://www.instagram.com/carl_fo/" target="_blank" rel="noopener">Instagram @CARL_FO</a> &nbsp; <a href="../privacidad.html">Política de datos</a></span>
+</div></footer>
+
+<a class="btn main float" href="https://wa.me/573506343112?text=Hola%20Carlos%2C%20quiero%20informaci%C3%B3n." target="_blank" rel="noopener">WhatsApp</a>
+</body>
+</html>
