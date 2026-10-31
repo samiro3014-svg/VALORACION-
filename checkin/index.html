@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Check-in semanal · Carlos Forero</title>
+<meta name="description" content="Reporte semanal de seguimiento. Carlos Forero, preparador físico y nutricionista.">
+<meta name="theme-color" content="#0B3B59">
+<link rel="icon" href="../logo.png">
+<style>
+
+:root{
+  --bg:#F3F6F8; --surface:#FFFFFF; --ink:#15232E; --mut:#5B6B78; --line:#DCE3E8;
+  --brand:#0B3B59; --brand-2:#114B70; --apple:#83C341; --apple-ink:#3F7F1E; --apple-bg:#EEF6E5;
+  --btn:#114B70; --btn-ink:#FFFFFF; --focus:#83C341; --warn:#8A5200; --warn-bg:#FFF5E3; --err:#B3261E;
+  --chip:#F7F9FA; --chip-on:#114B70; --chip-on-ink:#FFFFFF;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B151C; --surface:#13202A; --ink:#E5ECF1; --mut:#9DADB9; --line:#263843;
+  --brand:#0A2E45; --brand-2:#7DB3DD; --apple:#8FD14F; --apple-ink:#A6DE6F; --apple-bg:#1A2B17;
+  --btn:#2D6C9C; --btn-ink:#FFFFFF; --focus:#8FD14F; --warn:#F2B65A; --warn-bg:#2B2213; --err:#FF8A80;
+  --chip:#182833; --chip-on:#2D6C9C; --chip-on-ink:#FFFFFF; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B151C; --surface:#13202A; --ink:#E5ECF1; --mut:#9DADB9; --line:#263843;
+  --brand:#0A2E45; --brand-2:#7DB3DD; --apple:#8FD14F; --apple-ink:#A6DE6F; --apple-bg:#1A2B17;
+  --btn:#2D6C9C; --btn-ink:#FFFFFF; --focus:#8FD14F; --warn:#F2B65A; --warn-bg:#2B2213; --err:#FF8A80;
+  --chip:#182833; --chip-on:#2D6C9C; --chip-on-ink:#FFFFFF; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--font)}
+.band{background:var(--brand);color:#fff}
+.band .in{max-width:640px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.band img{width:52px;height:34px;object-fit:contain;background:#fff;border-radius:8px;padding:2px 4px}
+.band b{display:block;font-size:16px;letter-spacing:.2px}
+.band small{display:block;font-size:13px;opacity:.85}
+main{max-width:640px;margin:0 auto;padding:16px 16px 120px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 16px}
+h1{font-size:22px;line-height:1.25;margin:0 0 6px}
+h2{font-size:19px;line-height:1.3;margin:0 0 4px}
+.lead{color:var(--mut);margin:0 0 16px;font-size:15px}
+.prog{margin:0 0 12px}
+.prog .meta{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);margin-bottom:6px}
+.bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--apple);width:0;transition:width .25s}
+.f{margin:0 0 20px;border:0;padding:0;min-width:0}
+.f > label.q, .f > legend{display:block;font-weight:600;font-size:15px;margin:0 0 8px;padding:0}
+.req{color:var(--err);margin-left:2px}
+.help{color:var(--mut);font-size:13px;margin:-4px 0 8px}
+input[type=text],input[type=email],input[type=tel],input[type=date],input[type=time],input[type=number],textarea{
+  width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--surface);
+  border:1.5px solid var(--line);border-radius:10px;padding:12px;min-height:48px}
+textarea{min-height:84px;resize:vertical}
+input:focus-visible,textarea:focus-visible{outline:3px solid var(--focus);outline-offset:1px;border-color:var(--brand-2)}
+.unit{display:flex;align-items:center;gap:8px}
+.unit input{flex:1}
+.unit span{color:var(--mut);font-size:15px;min-width:28px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts.col{flex-direction:column}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;width:1px;height:1px}
+.opt span{display:flex;align-items:center;min-height:46px;padding:10px 14px;border:1.5px solid var(--line);border-radius:10px;background:var(--chip);cursor:pointer;font-size:15px;user-select:none}
+.opts.col .opt span{width:100%}
+.opt input:checked + span{background:var(--chip-on);color:var(--chip-on-ink);border-color:var(--chip-on)}
+.opt input:focus-visible + span{outline:3px solid var(--focus);outline-offset:1px}
+.scale{display:grid;grid-template-columns:repeat(10,1fr);gap:4px}
+.scale .opt span{justify-content:center;padding:10px 0;min-height:44px}
+.ends{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);margin-top:4px}
+.consent{display:flex;gap:12px;align-items:flex-start;padding:12px;border:1.5px solid var(--line);border-radius:10px;background:var(--chip);cursor:pointer}
+.consent input{width:22px;height:22px;margin:2px 0 0;flex:none;accent-color:var(--brand-2)}
+.consent span{font-size:14px}
+.help a{color:var(--brand-2)}
+.sub{font-size:13px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--apple-ink);margin:24px 0 10px;padding-top:16px;border-top:1px solid var(--line)}
+.sub:first-child{margin-top:0;padding-top:0;border-top:0}
+.note{background:var(--apple-bg);border-radius:10px;padding:12px;font-size:14px;margin:0 0 16px}
+.err{color:var(--err);font-size:13px;margin-top:6px}
+.f.bad input,.f.bad textarea{border-color:var(--err)}
+.f.bad .opt span{border-color:var(--err)}
+.nav{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+.nav .in{max-width:640px;margin:0 auto;display:flex;gap:10px}
+.btn{font:inherit;font-weight:600;font-size:16px;border:0;border-radius:10px;min-height:50px;padding:0 18px;cursor:pointer;background:var(--btn);color:var(--btn-ink);flex:1}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);flex:0 0 auto}
+.btn:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.btn[disabled]{opacity:.6;cursor:default}
+.list{margin:0 0 16px;padding-left:20px}
+.list li{margin:4px 0}
+.ok{text-align:center;padding:12px 0}
+.ok svg{margin:0 auto 12px;display:block}
+.wa{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;margin-top:12px}
+.fine{color:var(--mut);font-size:13px;margin-top:16px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.row3 label{font-size:13px;color:var(--mut);display:block;margin:0 0 4px}
+.calc{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+.calc div{flex:1 1 140px;background:var(--apple-bg);border-radius:10px;padding:8px 12px}
+.calc small{display:block;color:var(--mut);font-size:12px}
+.calc b{font-size:18px}
+.sec{font-size:13px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--apple-ink);margin:26px 0 12px;padding-top:16px;border-top:1px solid var(--line)}
+.sec:first-of-type{margin-top:0;padding-top:0;border-top:0}
+.sum{white-space:pre-wrap;background:var(--chip);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:13px;margin:12px 0 0;text-align:left}
+</style>
+</head>
+<body>
+<header class="band"><div class="in">
+  <img src="../logo.png" alt="" width="52" height="34">
+  <div><b>Check-in semanal</b><small>Carlos Forero · Preparador físico &amp; Nutricionista</small></div>
+</div></header>
+
+<main>
+  <form id="form" class="card" novalidate>
+    <p class="lead" style="margin-top:0">Complételo cada domingo. Tiempo estimado: 2 minutos. Con estos datos se decide si el plan se mantiene o se ajusta.</p>
+
+    <p class="sec">Sus datos</p>
+    <div class="f" data-id="nombre"><label class="q" for="f_nombre">Nombre completo<span class="req">*</span></label><input type="text" id="f_nombre" autocomplete="name"><p class="err" hidden></p></div>
+    <div class="f" data-id="whatsapp"><label class="q" for="f_whatsapp">Número de WhatsApp<span class="req">*</span></label><input type="tel" id="f_whatsapp" inputmode="tel" autocomplete="tel"><p class="err" hidden></p></div>
+    <div class="f" data-id="semana"><label class="q" for="f_semana">Semana del programa<span class="req">*</span></label>
+      <div class="unit"><input type="number" id="f_semana" inputmode="numeric" min="1" max="52" step="1"><span>de 12</span></div><p class="err" hidden></p></div>
+
+    <p class="sec">Medidas</p>
+    <div class="f" data-id="peso"><label class="q">Peso en ayunas (kg)<span class="req">*</span></label>
+      <p class="help">Después de ir al baño, antes de comer o beber. Registre al menos dos días.</p>
+      <div class="row3">
+        <div><label for="f_p1">Lunes</label><input type="number" id="f_p1" inputmode="decimal" min="30" max="250" step="0.1"></div>
+        <div><label for="f_p2">Miércoles</label><input type="number" id="f_p2" inputmode="decimal" min="30" max="250" step="0.1"></div>
+        <div><label for="f_p3">Viernes</label><input type="number" id="f_p3" inputmode="decimal" min="30" max="250" step="0.1"></div>
+      </div>
+      <div class="calc" id="calc" hidden></div>
+      <p class="err" hidden></p></div>
+    <div class="f" data-id="cintura"><label class="q" for="f_cintura">Perímetro de cintura (cm)</label>
+      <p class="help">Cada 2 semanas (semanas pares), a la altura del ombligo. Déjelo vacío si no le corresponde.</p>
+      <div class="unit"><input type="number" id="f_cintura" inputmode="decimal" min="45" max="200" step="0.5"><span>cm</span></div><p class="err" hidden></p></div>
+
+    <p class="sec">Su semana</p>
+    <div id="scales"></div>
+
+    <p class="sec">Algo que deba saber</p>
+    <fieldset class="f" data-id="eventos"><legend>Esta semana tuvo</legend><div class="opts" id="o_eventos"></div><p class="err" hidden></p></fieldset>
+    <div class="f" data-id="dificultad"><label class="q" for="f_dificultad">¿Cuál fue su principal dificultad y qué le gustaría ajustar?</label><textarea id="f_dificultad" placeholder="Ejemplo: tuve hambre en las noches; el sábado comí fuera."></textarea></div>
+    <p class="note" id="fotos" hidden>Esta semana corresponde enviar fotos de progreso (frente, perfil y espalda) por WhatsApp, con la misma luz y ropa de la primera vez.</p>
+    <div class="hp" aria-hidden="true"><label>No llenar <input type="text" id="hp" tabindex="-1" autocomplete="off"></label></div>
+  </form>
+  <section id="done" class="card" hidden></section>
+</main>
+
+<nav class="nav" id="nav"><div class="in"><button type="button" class="btn" id="bSend">Enviar check-in</button></div></nav>
+
+<script>
+"use strict";
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbwAG9hAG16v5qMxtlZIP85Gi4Si3Q99FhQF218-tXA7rc_nEHw17r2exRjCH6JiqiyO8w/exec";
+const WHATSAPP = "573506343112";
+const KEY = "cf-checkin";
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const nf = (x,d=1) => Number(x).toLocaleString("es-CO",{minimumFractionDigits:d,maximumFractionDigits:d});
+const store = { get(){ try{ return JSON.parse(localStorage.getItem(KEY)) || {}; }catch(e){ return {}; } }, set(x){ try{ localStorage.setItem(KEY, JSON.stringify(x)); }catch(e){} } };
+
+const SCALES = [
+  {id:"adherencia", label:"¿Qué tan bien cumplió el plan de alimentación?", req:1, type:"scale", ends:["Nada","Al 100 %"]},
+  {id:"entrenos", label:"Entrenamientos realizados", req:1, type:"radio", opts:["0","1","2","3","4","5","6","7"]},
+  {id:"rendimiento", label:"Rendimiento en el entrenamiento", req:1, type:"radio", opts:["Mejor","Igual","Peor"]},
+  {id:"hambre", label:"Hambre durante la semana", req:1, type:"scale", ends:["Ninguna","Mucha"]},
+  {id:"energia", label:"Energía durante el día", req:1, type:"scale", ends:["Muy baja","Muy alta"]},
+  {id:"sueno", label:"Calidad del sueño", req:1, type:"scale", ends:["Muy mala","Excelente"]},
+  {id:"digestion", label:"Digestión", req:1, type:"radio", opts:["Buena","Regular","Mala"]}
+];
+const EVENTOS = ["Viaje","Enfermedad","Dolor o lesión","Comidas fuera de casa","Alcohol","Ninguno"];
+
+/* ---------- construir campos ---------- */
+const opt = (name,o,multi) => `<label class="opt"><input type="${multi?"checkbox":"radio"}" name="${name}" value="${esc(o)}"><span>${esc(o)}</span></label>`;
+$("#scales").innerHTML = SCALES.map(f => {
+  const o = f.type === "scale" ? ["1","2","3","4","5","6","7","8","9","10"] : f.opts;
+  const ends = f.ends ? `<div class="ends"><span>${f.ends[0]}</span><span>${f.ends[1]}</span></div>` : "";
+  return `<fieldset class="f" data-id="${f.id}"><legend>${esc(f.label)}${f.req?'<span class="req">*</span>':""}</legend><div class="${f.type==="scale"?"scale":"opts"}">${o.map(x => opt("f_"+f.id,x)).join("")}</div>${ends}<p class="err" hidden></p></fieldset>`;
+}).join("");
+$("#o_eventos").innerHTML = EVENTOS.map(x => opt("f_eventos",x,1)).join("");
+
+/* ---------- datos recordados en este dispositivo y enlace personal ---------- */
+const mem = store.get(), qs = new URLSearchParams(location.search);
+$("#f_nombre").value = qs.get("nombre") || mem.nombre || "";
+$("#f_whatsapp").value = qs.get("tel") || mem.whatsapp || "";
+const hist = Array.isArray(mem.hist) ? mem.hist : [];
+const ultima = hist.length ? hist[hist.length-1] : null;
+if(ultima && ultima.semana) $("#f_semana").value = Number(ultima.semana) + 1;
+
+/* ---------- cálculos ---------- */
+function pesos(){ return ["#f_p1","#f_p2","#f_p3"].map(s => parseFloat($(s).value)).filter(v => v >= 30 && v <= 250); }
+function promedio(){ const p = pesos(); return p.length ? p.reduce((a,b) => a+b, 0) / p.length : null; }
+function calc(){
+  const pr = promedio(), box = $("#calc");
+  if(pr == null){ box.hidden = true; return; }
+  let h = `<div><small>Promedio de la semana</small><b>${nf(pr)} kg</b></div>`;
+  if(ultima && ultima.prom){ const d = pr - ultima.prom; h += `<div><small>Frente a la semana anterior</small><b>${d > 0 ? "+" : ""}${nf(d)} kg</b></div>`; }
+  box.innerHTML = h; box.hidden = false;
+}
+function fotosVisibles(){ const s = Number($("#f_semana").value); $("#fotos").hidden = ![4,8,12].includes(s); }
+$("#form").addEventListener("input", e => { if(/^f_p\d$/.test(e.target.id)) calc(); if(e.target.id === "f_semana") fotosVisibles(); });
+$("#form").addEventListener("change", e => { const b = e.target.closest(".f"); if(b){ b.classList.remove("bad"); const er = b.querySelector(".err"); if(er) er.hidden = true; } });
+fotosVisibles();
+
+/* ---------- validación ---------- */
+const val = id => { const c = document.querySelector(`input[name="f_${id}"]:checked`); return c ? c.value : ""; };
+function marcar(id, msg){ const b = document.querySelector(`[data-id="${id}"]`); b.classList.add("bad"); const e = b.querySelector(".err"); e.textContent = msg; e.hidden = false; return b; }
+function validar(){
+  document.querySelectorAll(".f.bad").forEach(b => { b.classList.remove("bad"); const e = b.querySelector(".err"); if(e) e.hidden = true; });
+  const bad = [];
+  if(!$("#f_nombre").value.trim()) bad.push(marcar("nombre","Este dato es obligatorio."));
+  if($("#f_whatsapp").value.replace(/\D/g,"").length < 7) bad.push(marcar("whatsapp","Revise el número de WhatsApp."));
+  const s = Number($("#f_semana").value); if(!(s >= 1 && s <= 52)) bad.push(marcar("semana","Indique la semana (1 a 12)."));
+  if(pesos().length < 2) bad.push(marcar("peso","Registre el peso de al menos dos días."));
+  const c = $("#f_cintura").value; if(c && !(c >= 45 && c <= 200)) bad.push(marcar("cintura","Revise el valor de la cintura."));
+  SCALES.forEach(f => { if(f.req && !val(f.id)) bad.push(marcar(f.id,"Seleccione una opción.")); });
+  if(bad.length){ bad[0].scrollIntoView({block:"center",behavior:"smooth"}); return false; }
+  return true;
+}
+
+/* ---------- resumen y envío ---------- */
+function alertas(d){
+  const a = [];
+  if(Number(d.adherencia) < 8) a.push("Adherencia menor de 8: simplificar el plan antes de cambiar calorías.");
+  if(Number(d.energia) <= 4 || d.rendimiento === "Peor") a.push("Energía baja o caída del rendimiento: revisar ingesta y disponibilidad energética.");
+  if(Number(d.hambre) >= 8) a.push("Hambre alta: revisar distribución de proteína, fibra y horarios.");
+  if(d.eventos.includes("Dolor o lesión") || d.eventos.includes("Enfermedad")) a.push("Reporta dolor, lesión o enfermedad.");
+  if(ultima && ultima.prom && d.prom && (ultima.prom - d.prom) > 0.01*ultima.prom) a.push("Pérdida mayor al 1 % del peso en una semana.");
+  return a;
+}
+function datos(){
+  const d = {nombre:$("#f_nombre").value.trim(), whatsapp:$("#f_whatsapp").value.trim(), semana:$("#f_semana").value,
+    peso_lun:$("#f_p1").value, peso_mie:$("#f_p2").value, peso_vie:$("#f_p3").value, cintura:$("#f_cintura").value,
+    eventos:[...document.querySelectorAll('input[name="f_eventos"]:checked')].map(i => i.value), dificultad:$("#f_dificultad").value.trim()};
+  SCALES.forEach(f => d[f.id] = val(f.id));
+  const pr = promedio(); d.prom = pr ? Math.round(pr*10)/10 : "";
+  d.cambio = ultima && ultima.prom && pr ? Math.round((pr - ultima.prom)*10)/10 : "";
+  return d;
+}
+function resumen(d, al){
+  const L = [`CHECK-IN SEMANA ${d.semana} · ${d.nombre}`,
+    `Peso promedio: ${nf(d.prom)} kg` + (d.cambio !== "" ? ` (${d.cambio > 0 ? "+" : ""}${nf(d.cambio)} kg frente a la semana anterior)` : ""),
+    d.cintura ? `Cintura: ${d.cintura} cm` : "",
+    `Adherencia: ${d.adherencia}/10 · Entrenos: ${d.entrenos} · Rendimiento: ${d.rendimiento}`,
+    `Hambre: ${d.hambre}/10 · Energía: ${d.energia}/10 · Sueño: ${d.sueno}/10 · Digestión: ${d.digestion}`,
+    d.eventos.length ? `Eventos: ${d.eventos.join(", ")}` : "",
+    d.dificultad ? `Dificultad: ${d.dificultad}` : ""];
+  const out = L.filter(x => x !== "");
+  if(al.length) out.push("", "ALERTAS", ...al.map(x => "- " + x));
+  return out.join("\n");
+}
+$("#bSend").addEventListener("click", async () => {
+  if(!validar()) return;
+  const b = $("#bSend"); b.disabled = true; b.textContent = "Enviando…";
+  const d = datos(), al = alertas(d), txt = resumen(d, al);
+  let ok = true;
+  try{
+    const ctrl = new AbortController(), t = setTimeout(() => ctrl.abort(), 15000);
+    await fetch(ENDPOINT, {method:"POST", mode:"no-cors", keepalive:true, signal:ctrl.signal, headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body: JSON.stringify({tipo:"checkin", valores:Object.assign({}, d, {eventos:d.eventos.join(", ")}), resumen:txt, alertas:al, hp:$("#hp").value})});
+    clearTimeout(t);
+  }catch(e){ ok = false; }
+  /* recordar en este dispositivo para comparar la próxima semana */
+  hist.push({semana:d.semana, prom:d.prom, cintura:d.cintura, fecha:new Date().toISOString().slice(0,10)});
+  store.set({nombre:d.nombre, whatsapp:d.whatsapp, hist:hist.slice(-16)});
+  const wa = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(txt)}`;
+  $("#form").hidden = true; $("#nav").hidden = true;
+  const done = $("#done"); done.hidden = false;
+  done.innerHTML = `<div class="ok">${ok ? `<svg width="48" height="48" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#4C9A2A"/><path d="M12 20.5l5.5 5.5L28.5 15" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>` : ""}
+    <h1>${ok ? "Check-in recibido" : "No se pudo confirmar el envío"}</h1>
+    <p class="lead">${ok ? "Recibirá la respuesta con la decisión de la semana según su nivel de servicio." : "Envíe el resumen por WhatsApp con el botón."}</p></div>
+    <p class="sum">${esc(txt)}</p>
+    <a class="btn wa" href="${wa}" target="_blank" rel="noopener">${ok ? "Enviar también por WhatsApp" : "Enviar resumen por WhatsApp"}</a>`;
+  window.scrollTo(0,0);
+});
+</script>
+</body>
+</html>
